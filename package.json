@@ -10,12 +10,12 @@
     "format": "biome format . --write",
     "check": "biome check .",
     "ci": "biome ci .",
-    "dev": "concurrently --prefix-colors 'cyan,magenta' \"cd packages/api && bun run dev\" \"cd packages/ui && bun run dev\"",
-    "dev:api": "cd packages/api && bun run dev",
-    "dev:ui": "cd packages/ui && bun run dev",
+    "dev": "concurrently --prefix-colors 'cyan,magenta' \"cd packages/api && bun run api:dev\" \"cd packages/ui && bun run ui:dev\"",
+    "dev:api": "cd packages/api && bun run api:dev",
+    "dev:ui": "cd packages/ui && bun run ui:dev",
     "setup": "bun install && cd packages/api && bun install && cd ../ui && bun install",
     "setup:db": "docker compose up -d && cd packages/api && bun run drizzle-kit generate && bun run drizzle-kit push",
-    "build": "cd packages/api && bun run build && cd ../ui && bun run build",
+    "build": "cd packages/api && bun run api:build && cd ../ui && bun run ui:build",
     "clean": "rm -rf packages/*/node_modules packages/*/dist node_modules"
   },
   "devDependencies": {

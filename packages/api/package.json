@@ -5,6 +5,7 @@
   "scripts": {
     "api:dev": "bun --watch run src/index.ts",
     "api:spec&client": "bun src/utils/openapi-document.ts && bun openapi-ts",
+    "api:build": "nest build",
     "db:generate": "bunx drizzle-kit generate",
     "db:migrate": "bunx drizzle-kit migrate",
     "db:studio": "drizzle-kit studio"
