@@ -1,94 +1,290 @@
-# Full-Stack Developer Take-Home Project
+# Project Management System
 
-## Project Overview
-Build a **Project Task Manager** - a simplified version of tools like Linear or Asana. This exercise will demonstrate your ability to work with our tech stack and make thoughtful architectural decisions.
+A full-stack project management application with task tracking capabilities, built with NestJS, React, and PostgreSQL.
 
-**Time Expectation:** 3-4 hours maximum. We value quality over completeness - focus on demonstrating your approach rather than building every feature.
+## Features
 
-## Tech Stack Requirements
+- Project Management
+  - Create and manage projects
+  - View project details and tasks
+  - JWT-based authentication
 
-### Mandatory
-- **Runtime:** Bun - https://bun.sh/
-- **Frontend:** React with TypeScript
-- **Backend:** NestJS with TypeScript
-- **Database:** PostgreSQL
-- **ORM:** Drizzle ORM for database interactions
-  - https://orm.drizzle.team/
-- **Validation:** TypeBox for API validation, DTOs, and schema definitions
-  - https://github.com/sinclairzx81/typebox
-  - https://github.com/jayalfredprufrock/nestjs-typebox
-- **UI Framework:** Mantine UI for components and styling
-- **Data Fetching:** React Query (TanStack Query) for client-side data management
-- **Client Gen** Look at openapi-ts in API package
+- Task Management
+  - Create, update, and delete tasks
+  - Task status tracking (todo, in_progress, done)
+  - Priority levels (low, medium, high)
+  - Filter tasks by status and priority
+  - Responsive grid layout for task cards
 
-## Core Features to Implement
+## Tech Stack
 
-### 1. Project Management
-- Create a new project with a name and description
-- List all projects
-- View a single project with its tasks
+### Backend
+- NestJS with Fastify
+- PostgreSQL with Drizzle ORM
+- TypeBox for validation
+- JWT authentication
 
-### 2. Task Management
-- Add tasks to a project with:
-   - Title (required)
-   - Description (optional)
-   - Status: `todo`, `in_progress`, `done`
-   - Priority: `low`, `medium`, `high`
-- Update task status (drag-and-drop is nice but not required)
-- Basic task filtering by status or priority
+### Frontend
+- React with TypeScript
+- Mantine UI components
+- Zustand for state management
+- React Router for navigation
 
-### 3. Data Persistence
-- Use PostgreSQL to store projects and tasks
-- Include proper relationships between projects and tasks
-- Implement basic CRUD operations
+## Prerequisites
 
-### 4. Simple Auth Impl
-- JWT or cookie based
-- Keep it simple, doesn't need to be complex
+- Bun 1.0+
+- PostgreSQL 17+
+- Docker (optional, recommended for local development)
 
-## What We're Looking For
+## Quick Start
 
-### Technical Skills
-- Clean, readable TypeScript code
-- Proper React patterns (hooks, component composition)
-- RESTful API design with NestJS
-- Drizzle ORM usage for database operations
-- TypeBox integration for validation and type safety
-- Error handling and validation
+1. Clone the repository:
+```bash
+git clone <repository-url>
+cd nilacare-interview-exercise
+```
 
-### Thought Process
-- How you structure and organize code
-- Decision-making around state management
-- Database design choices
-- Trade-offs you make given time constraints
+2. Run the setup script to install all dependencies:
+```bash
+bun run setup
+```
 
-## Deliverables
+3. Set up the database and run migrations:
+```bash
+# This will:
+# - Start PostgreSQL in Docker
+# - Generate database migrations
+# - Apply the migrations
+bun run setup:db
+```
 
-1. **Code Repository**
-   - Include a README with setup instructions
-   - Both frontend and backend should run locally
-   - Include any database migration/setup scripts
+4. Configure environment variables:
+```bash
+# Copy the example env file
+cp packages/api/.env.example packages/api/.env
 
-2. **Brief Architecture Notes**
-   - Key decisions you made and why
-   - What you'd do differently with more time
-   - Any assumptions you made
+# Update the values in .env if needed
+# Default values should work for local development
+```
 
-## Bonus Points (Optional)
-- Search/filter functionality
-- Mobile-responsive design
-- Unit tests for critical functions
+5. Start the development servers:
+```bash
+# Start both frontend and backend
+bun run dev
 
-## What You Don't Need to Worry About
-- Complex authentication/authorization
-- Perfect UI/UX design
-- Comprehensive test coverage
-- Production deployment setup
-- Advanced optimizations
+# Or start them individually:
+bun run dev:api  # Start only the backend
+bun run dev:ui   # Start only the frontend
+```
 
-## Questions?
-If anything is unclear, make reasonable assumptions and document them in your notes. We're interested in seeing how you handle ambiguity and make decisions with incomplete information.
+The application will be available at:
+- Frontend: http://localhost:5173
+- Backend: http://localhost:3000
+- API Documentation: http://localhost:3000/docs
 
----
+## Available Scripts
 
-**Remember:** This isn't about building the perfect application - it's about demonstrating your thought process, coding style, and ability to work with our stack. Focus on showing us how you approach problems and make technical decisions.
+### Root Directory
+- `bun run dev` - Start both frontend and backend in development mode
+- `bun run dev:api` - Start only the backend
+- `bun run dev:ui` - Start only the frontend
+- `bun run setup` - Install all dependencies
+- `bun run setup:db` - Set up database and run migrations
+- `bun run build` - Build both frontend and backend
+- `bun run clean` - Remove all node_modules and build directories
+
+### Backend (packages/api)
+- `bun run api:dev` - Start the backend in development mode
+- `bun run api:build` - Build the backend
+- `bun run drizzle-kit generate` - Generate new migrations
+- `bun run drizzle-kit migrate` - Apply migrations
+
+### Frontend (packages/ui)
+- `bun run ui:dev` - Start the frontend in development mode
+- `bun run ui:build` - Build for production
+- `bun run ui:preview` - Preview production build locally
+
+## Development Workflow
+
+1. **First-time setup:**
+   ```bash
+   # Clone and setup
+   git clone <repository-url>
+   cd nilacare-interview-exercise
+   bun run setup
+   bun run setup:db
+
+   # Start development
+   bun run dev
+   ```
+
+2. **Regular development:**
+   ```bash
+   bun run dev
+   ```
+
+3. **Database changes:**
+   ```bash
+   cd packages/api
+   
+   # After modifying schema files
+   bun run drizzle-kit generate
+   bun run drizzle-kit migrate
+   ```
+
+4. **Building for production:**
+   ```bash
+   bun run build
+   ```
+
+## Architecture Decisions
+
+### Backend
+
+1. **NestJS with Fastify**
+   - Chose NestJS for its robust module system and dependency injection
+   - Used Fastify instead of Express for better performance
+   - Modular architecture makes it easy to add new features
+
+2. **Drizzle ORM**
+   - Type-safe database operations
+   - Better performance compared to TypeORM
+   - Built-in migration system
+   - SQL-first approach for better control
+
+3. **TypeBox for Validation**
+   - Runtime type validation
+   - Better performance than class-validator
+   - Shared types between frontend and backend
+   - OpenAPI schema generation
+
+4. **JWT Authentication**
+   - Stateless authentication
+   - Easy to scale horizontally
+   - Built-in support in Fastify
+
+### Frontend
+
+1. **Mantine UI**
+   - Modern component library
+   - Built-in dark mode support
+   - Excellent TypeScript support
+   - Comprehensive component set
+
+2. **Zustand**
+   - Lightweight state management
+   - Simple API compared to Redux
+   - Built-in TypeScript support
+   - Easy integration with React hooks
+
+3. **Project Structure**
+   - Feature-based organization
+   - Shared types between frontend and backend
+   - Reusable components
+   - Clear separation of concerns
+
+## Future Improvements
+
+With more time, I would add:
+
+1. **Features**
+   - Drag-and-drop task reordering
+   - Task comments and attachments
+   - Task assignments to users
+   - Task due dates and reminders
+   - Real-time updates using WebSocket
+   - Task search functionality
+   - Task categories/labels
+
+2. **Technical Improvements**
+   - Unit and integration tests
+   - E2E tests with Cypress
+   - CI/CD pipeline
+   - Docker compose for production
+   - Rate limiting
+   - Request caching
+   - Error tracking (e.g., Sentry)
+   - Performance monitoring
+   - Better error handling
+   - Input sanitization
+   - API documentation with examples
+
+3. **UX Improvements**
+   - Loading skeletons
+   - Better error messages
+   - Keyboard shortcuts
+   - Bulk actions
+   - Task templates
+   - Export functionality
+   - Mobile optimization
+   - Offline support
+
+## Assumptions
+
+1. **Authentication**
+   - Users are already registered
+   - JWT tokens are handled securely
+   - No need for refresh tokens in MVP
+
+2. **Data**
+   - Projects and tasks belong to a single user
+   - No need for sharing/collaboration in MVP
+   - Simple data structure is sufficient
+
+3. **Performance**
+   - Small to medium dataset
+   - No need for pagination in MVP
+   - Simple caching strategy is sufficient
+
+4. **Security**
+   - Basic JWT authentication is sufficient
+   - No need for role-based access in MVP
+   - Frontend runs in secure environment
+
+## Troubleshooting
+
+### Database Issues
+1. Ensure PostgreSQL is running:
+   ```bash
+   docker ps
+   ```
+2. Reset the database:
+   ```bash
+   cd packages
+   docker-compose down -v
+   docker-compose up -d
+   cd api
+   bun run drizzle-kit generate
+   bun run drizzle-kit push
+   ```
+
+### Development Server Issues
+1. Clear node_modules and reinstall:
+   ```bash
+   bun run clean
+   bun run setup
+   ```
+2. Check port conflicts:
+   - Backend uses port 3000
+   - Frontend uses port 5173
+   - PostgreSQL uses port 5432
+
+## API Documentation
+
+The API documentation is available at `/docs` when running the backend server. It includes:
+- All available endpoints
+- Request/response schemas
+- Authentication requirements
+- Example requests
+
+## Contributing
+
+1. Fork the repository
+2. Create a feature branch
+3. Commit your changes
+4. Push to the branch
+5. Create a Pull Request
+
+## License
+
+MIT
