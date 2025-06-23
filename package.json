@@ -19,7 +19,7 @@
     "clean": "rm -rf packages/*/node_modules packages/*/dist node_modules"
   },
   "devDependencies": {
-    "@biomejs/biome": "^1.9.4",
+    "@biomejs/biome": "^2.0.5",
     "concurrently": "^9.2.0"
   }
 }
