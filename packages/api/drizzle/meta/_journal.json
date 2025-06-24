@@ -5,22 +5,8 @@
     {
       "idx": 0,
       "version": "7",
-      "when": 1750432354532,
-      "tag": "0000_chemical_falcon",
-      "breakpoints": true
-    },
-    {
-      "idx": 1,
-      "version": "7",
-      "when": 1750447081250,
-      "tag": "0001_tan_maria_hill",
-      "breakpoints": true
-    },
-    {
-      "idx": 2,
-      "version": "7",
-      "when": 1750774533826,
-      "tag": "0002_nice_celestials",
+      "when": 1750800977949,
+      "tag": "0000_majestic_wild_child",
       "breakpoints": true
     }
   ]
