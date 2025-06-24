@@ -3,11 +3,11 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
+    "api:start": "bun run src/index.ts",
     "api:dev": "bun --watch run src/index.ts",
     "api:spec&client": "bun src/utils/openapi-document.ts && bun openapi-ts",
-    "api:build": "nest build",
-    "db:generate": "bunx drizzle-kit generate",
-    "db:migrate": "bunx drizzle-kit migrate",
+    "db:generate": "drizzle-kit generate",
+    "db:migrate": "drizzle-kit migrate",
     "db:studio": "drizzle-kit studio"
   },
   "dependencies": {

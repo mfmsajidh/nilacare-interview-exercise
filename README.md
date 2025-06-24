@@ -90,12 +90,11 @@ The application will be available at:
 - `bun run dev:ui` - Start only the frontend
 - `bun run setup` - Install all dependencies
 - `bun run setup:db` - Set up database and run migrations
-- `bun run build` - Build both frontend and backend
 - `bun run clean` - Remove all node_modules and build directories
 
 ### Backend (packages/api)
+- `bun run api:start` - Start the backend
 - `bun run api:dev` - Start the backend in development mode
-- `bun run api:build` - Build the backend
 - `bun run drizzle-kit generate` - Generate new migrations
 - `bun run drizzle-kit migrate` - Apply migrations
 
@@ -132,9 +131,9 @@ The application will be available at:
    bun run drizzle-kit migrate
    ```
 
-4. **Building for production:**
+4. **Start production server:**
    ```bash
-   bun run build
+   bun run api:start
    ```
 
 ## Architecture Decisions
