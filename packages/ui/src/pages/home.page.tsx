@@ -28,7 +28,7 @@ export const HomePage = () => {
 	const handleRegister = async () => {
 		try {
 			setIsLoading(true);
-			const response = await fetch('http://localhost:3000/auth/register', {
+			const response = await fetch('http://localhost:3000/v1/auth/register', {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json',
@@ -66,7 +66,7 @@ export const HomePage = () => {
 	const handleLogin = async () => {
 		try {
 			setIsLoading(true);
-			const response = await fetch('http://localhost:3000/auth/login', {
+			const response = await fetch('http://localhost:3000/v1/auth/login', {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json',
@@ -110,7 +110,7 @@ export const HomePage = () => {
 				return;
 			}
 
-			const response = await fetch('http://localhost:3000/projects', {
+			const response = await fetch('http://localhost:3000/v1/projects', {
 				headers: {
 					'Authorization': `Bearer ${token}`,
 				},
@@ -147,7 +147,7 @@ export const HomePage = () => {
 				return;
 			}
 
-			const response = await fetch('http://localhost:3000/projects', {
+			const response = await fetch('http://localhost:3000/v1/projects', {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json',

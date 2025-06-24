@@ -14,7 +14,7 @@ interface TaskState {
   deleteTask: (id: number) => Promise<void>;
 }
 
-const API_URL = 'http://localhost:3000';
+const API_URL = 'http://localhost:3000/v1';
 
 export const useTaskStore = create<TaskState>((set, get) => ({
   tasks: [],
@@ -56,7 +56,7 @@ export const useTaskStore = create<TaskState>((set, get) => ({
         }
         throw new Error(data.message || 'Failed to fetch tasks');
       }
-      
+
       set({ tasks: Array.isArray(data) ? data : [] });
     } catch (error) {
       notifications.show({
@@ -87,7 +87,7 @@ export const useTaskStore = create<TaskState>((set, get) => ({
         },
         body: JSON.stringify(task),
       });
-      
+
       const data = await response.json();
       if (!response.ok) {
         if (response.status === 401) {
@@ -97,7 +97,7 @@ export const useTaskStore = create<TaskState>((set, get) => ({
         }
         throw new Error(data.message || 'Failed to create task');
       }
-      
+
       await get().fetchTasks();
       notifications.show({
         title: 'Success',
@@ -132,7 +132,7 @@ export const useTaskStore = create<TaskState>((set, get) => ({
         },
         body: JSON.stringify(task),
       });
-      
+
       const data = await response.json();
       if (!response.ok) {
         if (response.status === 401) {
@@ -142,7 +142,7 @@ export const useTaskStore = create<TaskState>((set, get) => ({
         }
         throw new Error(data.message || 'Failed to update task');
       }
-      
+
       await get().fetchTasks();
       notifications.show({
         title: 'Success',
@@ -175,7 +175,7 @@ export const useTaskStore = create<TaskState>((set, get) => ({
           'Authorization': `Bearer ${token}`,
         },
       });
-      
+
       const data = await response.json();
       if (!response.ok) {
         if (response.status === 401) {
@@ -185,7 +185,7 @@ export const useTaskStore = create<TaskState>((set, get) => ({
         }
         throw new Error(data.message || 'Failed to delete task');
       }
-      
+
       await get().fetchTasks();
       notifications.show({
         title: 'Success',
@@ -202,4 +202,4 @@ export const useTaskStore = create<TaskState>((set, get) => ({
       set({ loading: false });
     }
   },
-})); 
+}));

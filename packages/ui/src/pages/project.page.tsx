@@ -31,7 +31,7 @@ export function ProjectPage() {
           return;
         }
 
-        const response = await fetch(`http://localhost:3000/projects/${projectId}`, {
+        const response = await fetch(`http://localhost:3000/v1/projects/${projectId}`, {
           headers: {
             'Authorization': `Bearer ${token}`,
           },

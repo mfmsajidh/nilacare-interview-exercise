@@ -80,7 +80,7 @@ bun run dev:ui   # Start only the frontend
 The application will be available at:
 - Frontend: http://localhost:5173
 - Backend: http://localhost:3000
-- API Documentation: http://localhost:3000/docs
+- API Documentation: http://localhost:3000/api-docs
 
 ## Available Scripts
 
@@ -270,7 +270,7 @@ With more time, I would add:
 
 ## API Documentation
 
-The API documentation is available at `/docs` when running the backend server. It includes:
+The API documentation is available at `/api-docs` when running the backend server. It includes:
 - All available endpoints
 - Request/response schemas
 - Authentication requirements
