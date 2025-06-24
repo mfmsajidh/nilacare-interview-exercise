@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "api:start": "bun run src/index.ts",
-    "api:dev": "bun --watch run src/index.ts",
+    "api:dev": "bun --watch --env-file=.env run src/index.ts",
     "api:spec&client": "bun src/utils/openapi-document.ts && bun openapi-ts",
     "db:generate": "drizzle-kit generate",
     "db:migrate": "drizzle-kit migrate",

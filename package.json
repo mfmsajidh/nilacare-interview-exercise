@@ -3,7 +3,8 @@
   "private": true,
   "workspaces": [
     "packages/api",
-    "packages/ui"
+    "packages/ui",
+    "packages/client"
   ],
   "scripts": {
     "lint": "biome lint .",
@@ -13,7 +14,7 @@
     "dev": "concurrently --prefix-colors 'cyan,magenta' \"cd packages/api && bun run api:dev\" \"cd packages/ui && bun run ui:dev\"",
     "dev:api": "cd packages/api && bun run api:dev",
     "dev:ui": "cd packages/ui && bun run ui:dev",
-    "setup": "bun install && cd packages/api && bun install && cd ../ui && bun install",
+    "setup": "bun install && cd packages/api && bun install && cd ../ui && bun install && cd ../client && bun install",
     "setup:db": "docker compose up -d && cd packages/api && bun run drizzle-kit generate && bun run drizzle-kit push",
     "clean": "rm -rf packages/*/node_modules packages/*/dist node_modules"
   },
