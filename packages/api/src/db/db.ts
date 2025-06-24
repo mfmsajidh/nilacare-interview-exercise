@@ -8,16 +8,18 @@ export const db = drizzle({
 	connection: process.env.DATABASE_URL!,
 });
 
+export const DRIZZLE = Symbol('DRIZZLE');
+
 export type DB = typeof db;
 
 const dbProvider: Provider = {
-	provide: 'DRIZZLE_CLIENT',
+	provide: DRIZZLE,
 	useValue: db,
 };
 
 @Global()
 @Module({
 	providers: [dbProvider],
-	exports: ['DRIZZLE_CLIENT'],
+	exports: [dbProvider],
 })
 export class DatabaseModule {}
