@@ -1,5 +1,5 @@
 import {applyDecorators, Controller, UseGuards} from '@nestjs/common';
-import {AuthGuard} from './auth.guard.ts';
+import {AuthGuard} from './auth.guard';
 import {ApiBearerAuth, ApiTags} from '@nestjs/swagger';
 import type {VersionValue} from '@nestjs/common/interfaces/version-options.interface';
 

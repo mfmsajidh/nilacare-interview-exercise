@@ -1,9 +1,9 @@
 import {ActionIcon, AppShell, Group, Image} from '@mantine/core';
-import {client} from '@nila/client/src/client.gen.ts';
+import {client} from '@nila/client/src/client.gen';
 import {IconLogout} from '@tabler/icons-react';
 import {Outlet, useNavigate} from 'react-router';
 import Logo from './assets/logo.png';
-import {HeaderMenu} from './components/header.menu.tsx';
+import {HeaderMenu} from './components/header.menu';
 
 client.setConfig({
     baseUrl: import.meta.env.VITE_NILA_API_URL,

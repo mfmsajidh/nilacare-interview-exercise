@@ -1,4 +1,4 @@
-import {basePlatformUserSchema} from '../src/db/schemas/shared.ts';
+import {basePlatformUserSchema} from '../src/db/schemas/shared';
 import {type Static} from '@sinclair/typebox';
 
 declare module 'fastify' {

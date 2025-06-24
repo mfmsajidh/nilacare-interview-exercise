@@ -3,7 +3,7 @@ import { ProjectService } from '../services/project.service';
 import { CreateProjectSchema, UpdateProjectSchema, type CreateProjectDto, type UpdateProjectDto } from '../dtos/project.dto';
 import {type Static, Type} from '@sinclair/typebox';
 import { Validate } from 'nestjs-typebox';
-import {AuthenticatedController} from "utils/controller.decorator.ts";
+import {AuthenticatedController} from "utils/controller.decorator";
 
 const ResponseSchema = Type.Object({
   id: Type.Number(),
