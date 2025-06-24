@@ -9,6 +9,7 @@ import {createTheme, MantineProvider} from '@mantine/core';
 import {HomePage} from './pages/home.page.tsx';
 import {QueryClient, QueryClientProvider} from '@tanstack/react-query';
 import {Notifications} from '@mantine/notifications';
+import {ProjectPage} from "./pages/project.page.tsx";
 
 const myColor = ['#edf3ff', '#dae2f4', '#b3c2e6', '#8aa0d8', '#6783cc', '#5171c6', '#4568c4', '#3658ad', '#2e4e9c', '#21438a'] as const;
 
@@ -33,13 +34,17 @@ type RouteConfig = RouteObject & {
 
 const routesConfig: RouteConfig[] = [
 	{
-		path: '*',
+		path: '/',
 		element: <App />,
 		errorElement: <div>Something went wrong!</div>,
 		children: [
 			{
 				path: '',
 				element: <HomePage />,
+			},
+			{
+				path: '/projects/:id',
+				element: <ProjectPage/>
 			}
 		],
 	},
