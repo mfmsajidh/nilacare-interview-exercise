@@ -14,7 +14,6 @@
     "@fastify/compress": "^8.0.3",
     "@fastify/helmet": "^13.0.1",
     "@fastify/multipart": "^9.0.3",
-    "@fastify/static": "^8.2.0",
     "@golevelup/nestjs-stripe": "^0.9.3",
     "@google-cloud/storage": "^7.16.0",
     "@highlight-run/nest": "^3.6.26",
