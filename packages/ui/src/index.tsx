@@ -10,9 +10,9 @@ import {HomePage} from './pages/home.page.tsx';
 import {QueryClient, QueryClientProvider} from '@tanstack/react-query';
 import {Notifications} from '@mantine/notifications';
 
-const myColor = ['#edf3ff', '#dae2f4', '#b3c2e6', '#8aa0d8', '#6783cc', '#5171c6', '#4568c4', '#3658ad', '#2e4e9c', '#21438a'];
+const myColor = ['#edf3ff', '#dae2f4', '#b3c2e6', '#8aa0d8', '#6783cc', '#5171c6', '#4568c4', '#3658ad', '#2e4e9c', '#21438a'] as const;
 
-const alt = ['#fff6eb', '#fcead5', '#fbd2a3', '#fbb96e', '#fba443', '#fb962a', '#fb901f', '#e07c14', '#c76e0d', '#ad5d00'];
+const alt = ['#fff6eb', '#fcead5', '#fbd2a3', '#fbb96e', '#fba443', '#fb962a', '#fb901f', '#e07c14', '#c76e0d', '#ad5d00'] as const;
 
 const theme = createTheme({
 	fontFamily: 'Geist, sans-serif',
@@ -33,7 +33,7 @@ type RouteConfig = RouteObject & {
 
 const routesConfig: RouteConfig[] = [
 	{
-		path: '/',
+		path: '*',
 		element: <App />,
 		errorElement: <div>Something went wrong!</div>,
 		children: [
