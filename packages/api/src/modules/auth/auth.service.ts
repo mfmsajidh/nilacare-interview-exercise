@@ -1,5 +1,5 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
-import { UserRepository } from '../repositories/user.repository';
+import { UserRepository } from './user.repository';
 import * as bcrypt from 'bcrypt';
 import { JwtService } from './jwt.service';
 
@@ -48,4 +48,4 @@ export class AuthService {
     }
     return user;
   }
-} 
+}

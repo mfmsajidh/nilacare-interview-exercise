@@ -12,6 +12,7 @@ import {migrate} from 'drizzle-orm/node-postgres/migrator';
 import {db} from './db/db';
 import {Logger} from 'nestjs-pino';
 import {VersioningType} from '@nestjs/common';
+import {H} from "@highlight-run/nest";
 
 const env = {
 	projectID: 'jdk53pvd',
@@ -30,7 +31,7 @@ export async function runMigrations() {
 	console.log('Running migrations...');
 
 	try {
-		// This will automatically run needed migrations
+		// This will automatically run necessary migrations
 		await migrate(db, { migrationsFolder: './drizzle' });
 		console.log('Migrations completed successfully');
 	} catch (error) {
@@ -70,9 +71,10 @@ await app.register(compression);
 await app.register(multipart);
 
 const document = SwaggerModule.createDocument(app, OPENAPI_SPEC, {
-	operationIdFactory: (controllerKey, methodKey, version) => methodKey + version.toUpperCase(),
+	operationIdFactory: (_, methodKey, version) => methodKey + version?.toUpperCase(),
 });
 
+// @ts-ignore
 app.use('/api-docs', apiReference({ spec: { content: document }, withFastify: true }));
 
 await app.listen(process.env.PORT || 3000, '0.0.0.0');

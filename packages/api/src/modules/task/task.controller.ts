@@ -1,5 +1,5 @@
 import {Body, Delete, Get, Param, Post, Put, Query} from '@nestjs/common';
-import {TaskService} from '../services/task.service';
+import {TaskService} from './task.service';
 import {
     CreateTaskSchema,
     TaskFilterSchema,
@@ -7,10 +7,10 @@ import {
     type CreateTaskDto,
     type TaskFilterDto,
     type UpdateTaskDto
-} from '../dtos/task.dto';
+} from './dto/task.dto.ts';
 import {type Static, Type} from '@sinclair/typebox';
 import {Validate} from 'nestjs-typebox';
-import {AuthenticatedController} from "../common";
+import {AuthenticatedController} from "common/decorators";
 
 const StatusEnum = Type.Union([
     Type.Literal('todo'),

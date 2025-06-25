@@ -1,9 +1,9 @@
 import { Body, Delete, Get, Param, Post, Put } from '@nestjs/common';
-import { ProjectService } from '../services/project.service';
-import { CreateProjectSchema, UpdateProjectSchema, type CreateProjectDto, type UpdateProjectDto } from '../dtos/project.dto';
+import { ProjectService } from './project.service';
+import { CreateProjectSchema, UpdateProjectSchema, type CreateProjectDto, type UpdateProjectDto } from './dto/project.dto';
 import {type Static, Type} from '@sinclair/typebox';
 import { Validate } from 'nestjs-typebox';
-import {AuthenticatedController} from "../common";
+import {AuthenticatedController} from "common/decorators";
 
 const ResponseSchema = Type.Object({
   id: Type.Number(),

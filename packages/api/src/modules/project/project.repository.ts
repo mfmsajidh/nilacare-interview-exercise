@@ -1,8 +1,8 @@
 import { Injectable, Inject } from '@nestjs/common';
 import { eq } from 'drizzle-orm';
-import {type DB, DRIZZLE} from '../db/db';
+import {type DB, DRIZZLE} from 'db/db.ts';
 import { projects } from 'db/schemas';
-import type { CreateProjectDto, UpdateProjectDto } from '../dtos/project.dto';
+import type { CreateProjectDto, UpdateProjectDto } from './dto/project.dto';
 
 @Injectable()
 export class ProjectRepository {

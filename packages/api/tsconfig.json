@@ -2,10 +2,10 @@
 	"include": ["src/*", "types/*"],
 	"compilerOptions": {
 		"paths": {
-			"controllers/*": ["./src/controllers/*"],
-			"services/*": ["./src/services/*"],
+			"common/*": ["./src/common/*"],
+			"config/*": ["./src/config/*"],
 			"db/*": ["./src/db/*"],
-			"utils/*": ["./src/utils/*"],
+			"modules/*": ["./src/modules/*"],
 		},
 		"lib": ["ESNext", "DOM"],
 		"target": "ESNext",
