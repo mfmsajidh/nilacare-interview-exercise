@@ -1,6 +1,6 @@
 import { useMutation } from '@tanstack/react-query';
 import { loginV1Mutation, registerV1Mutation } from '@nila/client/src/@tanstack/react-query.gen';
-import { useAuthStore } from '../store/auth.store';
+import { useAuthStore } from '../store';
 import { errorNotification, successNotification } from '../utils/notifications';
 
 export const useAuth = () => {

@@ -1,9 +1,8 @@
 import { useState } from 'react';
 import { Container, Title, Card, Text, Button, Group, TextInput, Stack, PasswordInput } from '@mantine/core';
 import { useNavigate } from 'react-router';
-import { useAuthStore } from '../store/auth.store';
-import { useProjects } from '../hooks/useProjects';
-import { useAuth } from '../hooks/useAuth';
+import { useAuthStore } from '../store';
+import { useProjects, useAuth } from '../hooks';
 
 export const HomePage = () => {
 	const navigate = useNavigate();
