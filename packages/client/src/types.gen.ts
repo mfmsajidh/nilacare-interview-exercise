@@ -95,7 +95,7 @@ export type CreateTaskResponse = {
     projectId: number;
 };
 
-export type GetAllTasksResponse = Array<{
+export type SearchTasksResponse = Array<{
     id: number;
     title: string;
     description: string | null;
@@ -235,24 +235,22 @@ export type UpdateProjectV1Responses = {
 
 export type UpdateProjectV1Response = UpdateProjectV1Responses[keyof UpdateProjectV1Responses];
 
-export type GetAllTasksV1Data = {
+export type SearchTasksV1Data = {
     body?: never;
     path?: never;
     query?: {
-        filter?: {
-            status?: 'todo' | 'in_progress' | 'done';
-            priority?: 'low' | 'medium' | 'high';
-            projectId?: number;
-        };
+        projectId?: number;
+        status?: 'todo' | 'in_progress' | 'done';
+        priority?: 'low' | 'medium' | 'high';
     };
     url: '/v1/tasks';
 };
 
-export type GetAllTasksV1Responses = {
-    200: GetAllTasksResponse;
+export type SearchTasksV1Responses = {
+    200: SearchTasksResponse;
 };
 
-export type GetAllTasksV1Response = GetAllTasksV1Responses[keyof GetAllTasksV1Responses];
+export type SearchTasksV1Response = SearchTasksV1Responses[keyof SearchTasksV1Responses];
 
 export type CreateTaskV1Data = {
     body: CreateTaskBody;
