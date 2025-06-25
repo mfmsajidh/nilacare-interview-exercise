@@ -4,14 +4,20 @@ import {IconLogout} from '@tabler/icons-react';
 import {Outlet, useNavigate} from 'react-router';
 import Logo from './assets/logo.png';
 import {HeaderMenu} from './components/header.menu';
+import { useAuthStore } from './store/auth.store';
 
 client.setConfig({
     baseUrl: import.meta.env.VITE_NILA_API_URL,
 });
 
 export function App() {
-
     const navigate = useNavigate();
+    const { logout } = useAuthStore();
+
+    const handleLogout = () => {
+        logout();
+        navigate('/');
+    };
 
     return (
         <AppShell header={{height: 60}} padding="md">
@@ -21,7 +27,7 @@ export function App() {
                     <Group gap={'xs'}>
                         <HeaderMenu/>
 
-                        <ActionIcon size={'sm'} variant={'transparent'}>
+                        <ActionIcon size={'sm'} variant={'transparent'} onClick={handleLogout}>
                             <IconLogout/>
                         </ActionIcon>
                     </Group>

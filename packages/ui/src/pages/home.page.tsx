@@ -1,39 +1,25 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { Container, Title, Card, Text, Button, Group, TextInput, Stack, PasswordInput } from '@mantine/core';
 import { useNavigate } from 'react-router';
 import { notifications } from '@mantine/notifications';
-import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { loginV1Mutation, registerV1Mutation, getAllProjectsV1Options, createProjectV1Mutation } from '@nila/client/src/@tanstack/react-query.gen';
-import { client } from '@nila/client/src/client.gen';
+import { useMutation } from '@tanstack/react-query';
+import { loginV1Mutation, registerV1Mutation } from '@nila/client/src/@tanstack/react-query.gen';
+import { useAuthStore } from '../store/auth.store';
+import { useProjects } from '../hooks/useProjects';
 
 export const HomePage = () => {
 	const navigate = useNavigate();
-	const queryClient = useQueryClient();
 	const [newProject, setNewProject] = useState({ name: '', description: '' });
 	const [authForm, setAuthForm] = useState({ email: '', password: '' });
-	const [isAuthenticated, setIsAuthenticated] = useState(false);
-
-	useEffect(() => {
-		const token = localStorage.getItem('token');
-		if (token) {
-			setIsAuthenticated(true);
-			client.setConfig({ headers: { Authorization: `Bearer ${token}` } });
-		}
-	}, []);
-
-	const { data: projects = [], isLoading: isProjectsLoading } = useQuery({
-		...getAllProjectsV1Options(),
-		enabled: isAuthenticated,
-	});
+	const { isAuthenticated, setAuth, logout } = useAuthStore();
+	const { projects, loading: isProjectsLoading, createProject, isCreating } = useProjects();
 
 	const { mutate: register, isPending: isRegistering } = useMutation({
 		...registerV1Mutation({
 			baseUrl: import.meta.env.VITE_NILA_API_URL
 		}),
 		onSuccess: (data) => {
-			localStorage.setItem('token', data.token);
-			client.setConfig({ headers: { Authorization: `Bearer ${data.token}` } });
-			setIsAuthenticated(true);
+			setAuth(data.token);
 			setAuthForm({ email: '', password: '' });
 			notifications.show({
 				title: 'Success',
@@ -53,9 +39,7 @@ export const HomePage = () => {
 	const { mutate: login, isPending: isLoggingIn } = useMutation({
 		...loginV1Mutation(),
 		onSuccess: (data) => {
-			localStorage.setItem('token', data.token);
-			client.setConfig({ headers: { Authorization: `Bearer ${data.token}` } });
-			setIsAuthenticated(true);
+			setAuth(data.token);
 			setAuthForm({ email: '', password: '' });
 			notifications.show({
 				title: 'Success',
@@ -72,26 +56,6 @@ export const HomePage = () => {
 		},
 	});
 
-	const { mutate: createProject, isPending: isCreatingProject } = useMutation({
-		...createProjectV1Mutation(),
-		onSuccess: () => {
-			setNewProject({ name: '', description: '' });
-			queryClient.invalidateQueries({ queryKey: ['getAllProjectsV1'] });
-			notifications.show({
-				title: 'Success',
-				message: 'Project created successfully',
-				color: 'green',
-			});
-		},
-		onError: (error) => {
-			notifications.show({
-				title: 'Error',
-				message: error instanceof Error ? error.message : 'Failed to create project',
-				color: 'red',
-			});
-		},
-	});
-
 	const handleRegister = () => {
 		register({ body: authForm });
 	};
@@ -101,14 +65,8 @@ export const HomePage = () => {
 	};
 
 	const handleCreateProject = () => {
-		createProject({ body: newProject });
-	};
-
-	const handleLogout = () => {
-		localStorage.removeItem('token');
-		client.setConfig({ headers: {} });
-		setIsAuthenticated(false);
-		queryClient.clear();
+		createProject(newProject);
+		setNewProject({ name: '', description: '' });
 	};
 
 	if (!isAuthenticated) {
@@ -164,8 +122,8 @@ export const HomePage = () => {
 					<Title order={2}>Projects</Title>
 					<Button
 						variant="light"
-						onClick={handleLogout}
-						disabled={isProjectsLoading || isCreatingProject}
+						onClick={logout}
+						disabled={isProjectsLoading || isCreating}
 					>
 						Logout
 					</Button>
@@ -179,19 +137,19 @@ export const HomePage = () => {
 							placeholder="Enter project name"
 							value={newProject.name}
 							onChange={(e) => setNewProject({ ...newProject, name: e.target.value })}
-							disabled={isCreatingProject}
+							disabled={isCreating}
 						/>
 						<TextInput
 							label="Description"
 							placeholder="Enter project description"
 							value={newProject.description}
 							onChange={(e) => setNewProject({ ...newProject, description: e.target.value })}
-							disabled={isCreatingProject}
+							disabled={isCreating}
 						/>
 						<Button
 							onClick={handleCreateProject}
-							loading={isCreatingProject}
-							disabled={!newProject.name || isCreatingProject}
+							loading={isCreating}
+							disabled={!newProject.name || isCreating}
 						>
 							Create Project
 						</Button>
@@ -209,7 +167,7 @@ export const HomePage = () => {
 								<Button
 									variant="light"
 									onClick={() => navigate(`/projects/${project.id}`)}
-									disabled={isProjectsLoading || isCreatingProject}
+									disabled={isProjectsLoading || isCreating}
 								>
 									View Tasks
 								</Button>

@@ -33,3 +33,8 @@ export interface TaskFilter {
 	priority?: TaskPriority;
 	projectId?: number;
 }
+
+export interface CreateProjectDto {
+	name: string;
+	description?: string;
+}
