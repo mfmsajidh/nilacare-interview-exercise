@@ -1,4 +1,4 @@
-import {Type} from "@sinclair/typebox";
+import {type Static, Type} from "@sinclair/typebox";
 
 export const TaskStatusEnum = Type.Union([
     Type.Literal('todo'),
@@ -11,3 +11,6 @@ export const TaskPriorityEnum = Type.Union([
     Type.Literal('medium'),
     Type.Literal('high'),
 ]);
+
+export type TaskStatusEnumDto = Static<typeof TaskStatusEnum>;
+export type TaskPriorityEnumDto = Static<typeof TaskPriorityEnum>;

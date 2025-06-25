@@ -2,13 +2,16 @@ import {Body, Delete, Get, Param, Post, Put, Query, ParseIntPipe} from '@nestjs/
 import {TaskService} from './task.service';
 import {
     CreateTaskSchema,
-    TaskFilterSchema,
     UpdateTaskSchema,
     type CreateTaskDto,
     type TaskFilterDto,
     type UpdateTaskDto,
     type ResponseDto,
-    ResponseSchema
+    ResponseSchema,
+    TaskPriorityEnum,
+    TaskStatusEnum,
+    type TaskStatusEnumDto,
+    type TaskPriorityEnumDto
 } from './dto';
 import {Type} from '@sinclair/typebox';
 import {Validate} from 'nestjs-typebox';
@@ -32,17 +35,6 @@ export class TaskController {
     @Get()
     @Validate({
         request: [
-            {name: 'filter', type: 'query', schema: TaskFilterSchema}
-        ],
-        response: Type.Array(ResponseSchema)
-    })
-    getAllTasks(@Query() filter: TaskFilterDto): Promise<ResponseDto[]> {
-        return this.taskService.getAllTasks(filter);
-    }
-
-    @Get('search')
-    @Validate({
-        request: [
             {
                 name: 'projectId',
                 type: 'query',
@@ -52,28 +44,20 @@ export class TaskController {
             {
                 name: 'status',
                 type: 'query',
-                schema: Type.Optional(Type.Union([
-                    Type.Literal('todo'),
-                    Type.Literal('in_progress'),
-                    Type.Literal('done')
-                ]))
+                schema: Type.Optional(TaskStatusEnum)
             },
             {
                 name: 'priority',
                 type: 'query',
-                schema: Type.Optional(Type.Union([
-                    Type.Literal('low'),
-                    Type.Literal('medium'),
-                    Type.Literal('high')
-                ]))
+                schema: Type.Optional(TaskPriorityEnum)
             }
         ],
         response: Type.Array(ResponseSchema)
     })
     searchTasks(
         @Query('projectId') projectId?: number,
-        @Query('status') status?: 'todo' | 'in_progress' | 'done',
-        @Query('priority') priority?: 'low' | 'medium' | 'high'
+        @Query('status') status?: TaskStatusEnumDto,
+        @Query('priority') priority?: TaskPriorityEnumDto,
     ): Promise<ResponseDto[]> {
         const filter: TaskFilterDto = {
             ...(projectId && { projectId }),
