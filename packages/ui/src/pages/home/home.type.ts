@@ -1,31 +1,7 @@
-import type { NavigateFunction } from 'react-router';
-import type { GetProjectByIdResponse } from '@nila/client/src';
-import {Dispatch, SetStateAction} from "react";
+import {JSX} from "react";
 
-export type AuthForm = {
-    email: string;
-    password: string;
+export type HomePageProps = {
+    title: string;
+    children: JSX.Element;
 };
 
-export type NewProjectForm = {
-    name: string;
-    description: string;
-};
-
-export type HomePageViewProps = {
-    navigate: NavigateFunction;
-    newProject: NewProjectForm;
-    setNewProject: Dispatch<SetStateAction<NewProjectForm>>;
-    authForm: AuthForm;
-    setAuthForm: Dispatch<SetStateAction<AuthForm>>;
-    isAuthenticated: boolean;
-    logout: () => void;
-    isProjectsLoading: boolean;
-    isCreating: boolean;
-    projects: GetProjectByIdResponse[];
-    isLoggingIn: boolean;
-    isRegistering: boolean;
-    handleRegister: () => void;
-    handleLogin: () => void;
-    handleCreateProject: () => void;
-};

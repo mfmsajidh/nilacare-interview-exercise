@@ -12,7 +12,7 @@ import {
 import { useDisclosure } from '@mantine/hooks';
 import { TaskCard } from './task.card';
 import { TaskForm } from './task.form';
-import { useTasks } from '../hooks';
+import { useTasks } from '@hooks';
 import type { Task, TaskStatus, TaskPriority, CreateTaskDto } from '../../types/types';
 
 interface TaskListProps {

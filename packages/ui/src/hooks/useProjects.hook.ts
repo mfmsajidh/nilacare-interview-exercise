@@ -2,7 +2,7 @@ import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { getAllProjectsV1Options, createProjectV1Mutation, getAllProjectsV1QueryKey } from '@nila/client/src/@tanstack/react-query.gen';
 import type { CreateProjectDto } from '../../types/types';
 import {errorNotification, successNotification} from "../utils/notifications";
-import { useAuthStore } from '../store';
+import { useAuthStore } from '@store';
 
 export const useProjects = () => {
   const queryClient = useQueryClient();
@@ -16,8 +16,8 @@ export const useProjects = () => {
   const { mutate: createProject, isPending: isCreating } = useMutation({
     ...createProjectV1Mutation(),
     onSuccess: () => {
-      queryClient.invalidateQueries({ 
-        queryKey: getAllProjectsV1QueryKey() 
+      queryClient.invalidateQueries({
+        queryKey: getAllProjectsV1QueryKey()
       });
       successNotification('Project created successfully')
     },

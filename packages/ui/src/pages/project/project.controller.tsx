@@ -1,6 +1,6 @@
 import { useParams, useNavigate } from 'react-router';
 import { useEffect } from 'react';
-import {useProject} from "../../hooks";
+import {useProject} from "@hooks";
 import { ProjectPageView } from './project.page';
 import type { ProjectPageProps } from './project.type';
 

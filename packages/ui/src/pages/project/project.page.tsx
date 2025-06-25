@@ -5,21 +5,20 @@ import type { ProjectPageProps } from './project.type';
 
 export const ProjectPageView: FC<ProjectPageProps> = ({ project, isLoading, navigate, projectId }) => {
     return (
-        <Container size="lg" py="xl">
+        <Container>
             <Stack gap="xl">
-                <Group>
+                <Group justify="space-between" align="center">
+                    <Paper p="md" pos="relative">
+                        <LoadingOverlay visible={isLoading} />
+                        <Stack gap="md">
+                            <Title order={1}>{project?.name}</Title>
+                            <Text c="dimmed">{project?.description || ''}</Text>
+                        </Stack>
+                    </Paper>
                     <Button variant="light" onClick={() => navigate('/')}>
                         Back to Projects
                     </Button>
                 </Group>
-
-                <Paper p="md" pos="relative">
-                    <LoadingOverlay visible={isLoading} />
-                    <Stack gap="md">
-                        <Title order={1}>{project?.name}</Title>
-                        <Text c="dimmed">{project?.description || ''}</Text>
-                    </Stack>
-                </Paper>
 
                 <Paper p="md">
                     <TaskList projectId={projectId} />
