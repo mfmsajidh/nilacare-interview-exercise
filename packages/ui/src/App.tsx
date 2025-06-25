@@ -4,7 +4,7 @@ import {IconLogout} from '@tabler/icons-react';
 import {Outlet, useNavigate} from 'react-router';
 import Logo from './assets/logo.png';
 import {HeaderMenu} from './components/header.menu';
-import { useAuthStore } from './store/auth.store';
+import { useAuthStore } from './store';
 
 client.setConfig({
     baseUrl: import.meta.env.VITE_NILA_API_URL,
