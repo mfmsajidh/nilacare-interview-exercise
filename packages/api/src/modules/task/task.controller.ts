@@ -1,4 +1,4 @@
-import {Body, Delete, Get, Param, Post, Put, Query} from '@nestjs/common';
+import {Body, Delete, Get, Param, Post, Put, Query, ParseIntPipe} from '@nestjs/common';
 import {TaskService} from './task.service';
 import {
     CreateTaskSchema,
@@ -37,6 +37,49 @@ export class TaskController {
         response: Type.Array(ResponseSchema)
     })
     getAllTasks(@Query() filter: TaskFilterDto): Promise<ResponseDto[]> {
+        return this.taskService.getAllTasks(filter);
+    }
+
+    @Get('search')
+    @Validate({
+        request: [
+            {
+                name: 'projectId',
+                type: 'query',
+                schema: Type.Optional(Type.Number()),
+                coerceTypes: true
+            },
+            {
+                name: 'status',
+                type: 'query',
+                schema: Type.Optional(Type.Union([
+                    Type.Literal('todo'),
+                    Type.Literal('in_progress'),
+                    Type.Literal('done')
+                ]))
+            },
+            {
+                name: 'priority',
+                type: 'query',
+                schema: Type.Optional(Type.Union([
+                    Type.Literal('low'),
+                    Type.Literal('medium'),
+                    Type.Literal('high')
+                ]))
+            }
+        ],
+        response: Type.Array(ResponseSchema)
+    })
+    searchTasks(
+        @Query('projectId') projectId?: number,
+        @Query('status') status?: 'todo' | 'in_progress' | 'done',
+        @Query('priority') priority?: 'low' | 'medium' | 'high'
+    ): Promise<ResponseDto[]> {
+        const filter: TaskFilterDto = {
+            ...(projectId && { projectId }),
+            ...(status && { status }),
+            ...(priority && { priority })
+        };
         return this.taskService.getAllTasks(filter);
     }
 
