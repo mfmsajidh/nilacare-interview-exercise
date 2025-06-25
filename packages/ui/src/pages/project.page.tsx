@@ -1,19 +1,13 @@
 import { useParams, useNavigate } from 'react-router';
 import { Container, Title, Paper, Text, Stack, Group, Button, LoadingOverlay } from '@mantine/core';
-import { useQuery } from '@tanstack/react-query';
-import { getProjectByIdV1Options } from '@nila/client/src/@tanstack/react-query.gen';
+import { useProject } from '../hooks';
 import { TaskList } from '../components/task.list';
 
 export function ProjectPage() {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const projectId = parseInt(id || '0', 10);
-
-  const query = getProjectByIdV1Options({ path: { id: projectId } });
-  const { data: project, isLoading } = useQuery({
-    ...query,
-    enabled: !!projectId,
-  });
+  const { project, isLoading } = useProject(projectId);
 
   if (project === undefined) {
     localStorage.removeItem('token');
