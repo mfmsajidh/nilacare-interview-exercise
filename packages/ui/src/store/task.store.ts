@@ -6,23 +6,11 @@ import type { CreateTaskDto, UpdateTaskDto, TaskFilter } from '../../types/types
 export const useTaskStore = (filter: TaskFilter = {}) => {
   const queryClient = useQueryClient();
 
-  const { data: tasks = [], isLoading } = useQuery({
-    ...getAllTasksV1Options({
+  const { data: tasks = [], isLoading } = useQuery(
+    getAllTasksV1Options({
       query: { filter },
-    }),
-    onError: (error: Error) => {
-      if (error.message.includes('401')) {
-        localStorage.removeItem('token');
-        window.location.href = '/';
-        return;
-      }
-      notifications.show({
-        title: 'Error',
-        message: error.message,
-        color: 'red',
-      });
-    },
-  });
+    })
+  );
 
   const { mutate: createTaskMutation } = useMutation({
     ...createTaskV1Mutation(),

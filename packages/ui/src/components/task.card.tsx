@@ -1,21 +1,21 @@
 import { Card, Badge, Button, Text, Group, ActionIcon, Menu } from '@mantine/core';
 import { IconDots, IconTrash, IconEdit } from '@tabler/icons-react';
-import type { Task, TaskStatus } from '../../types/types';
+import type {Task} from '../../types/types';
 
 interface TaskCardProps {
   task: Task;
-  onStatusChange: (id: number, status: TaskStatus) => void;
+  onStatusChange: (id: number, status: Task['status']) => void;
   onEdit: (task: Task) => void;
   onDelete: (id: number) => void;
 }
 
-const statusColors = {
+const statusColors: Record<Task['status'], string> = {
   todo: 'blue',
   in_progress: 'yellow',
   done: 'green',
 } as const;
 
-const priorityColors = {
+const priorityColors: Record<Task['priority'], string> = {
   low: 'gray',
   medium: 'blue',
   high: 'red',
