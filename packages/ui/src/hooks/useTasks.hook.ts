@@ -1,21 +1,31 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { getAllTasksV1Options, createTaskV1Mutation, updateTaskV1Mutation, deleteTaskV1Mutation } from '@nila/client/src/@tanstack/react-query.gen';
+import { 
+  getAllTasksV1Options, 
+  getAllTasksV1QueryKey,
+  createTaskV1Mutation, 
+  updateTaskV1Mutation, 
+  deleteTaskV1Mutation 
+} from '@nila/client/src/@tanstack/react-query.gen';
 import type { CreateTaskDto, UpdateTaskDto, TaskFilter } from '../../types/types';
 import { errorNotification, successNotification } from "../utils/notifications";
 
 export const useTasks = (filter: TaskFilter = {}) => {
   const queryClient = useQueryClient();
 
-  const { data: tasks = [], isLoading } = useQuery(
-    getAllTasksV1Options({
+  const { data: tasks = [], isLoading } = useQuery({
+    ...getAllTasksV1Options({
       query: { filter },
     })
-  );
+  });
 
   const { mutate: createTaskMutation } = useMutation({
     ...createTaskV1Mutation(),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['getAllTasksV1'] });
+      queryClient.invalidateQueries({ 
+        queryKey: getAllTasksV1QueryKey({
+          query: { filter }
+        }) 
+      });
       successNotification('Task created successfully')
     },
     onError: (error) => {
@@ -31,7 +41,11 @@ export const useTasks = (filter: TaskFilter = {}) => {
   const { mutate: updateTaskMutation } = useMutation({
     ...updateTaskV1Mutation(),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['getAllTasksV1'] });
+      queryClient.invalidateQueries({ 
+        queryKey: getAllTasksV1QueryKey({
+          query: { filter }
+        }) 
+      });
       successNotification('Task updated successfully')
     },
     onError: (error) => {
@@ -47,7 +61,11 @@ export const useTasks = (filter: TaskFilter = {}) => {
   const { mutate: deleteTaskMutation } = useMutation({
     ...deleteTaskV1Mutation(),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['getAllTasksV1'] });
+      queryClient.invalidateQueries({ 
+        queryKey: getAllTasksV1QueryKey({
+          query: { filter }
+        }) 
+      });
       successNotification('Task deleted successfully')
     },
     onError: (error) => {
