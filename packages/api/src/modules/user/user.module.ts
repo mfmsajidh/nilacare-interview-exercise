@@ -12,8 +12,7 @@ import {AuthGuard} from "common/guards";
         UserService,
         UserRepository,
         AuthGuard
-    ],
-    exports: [UserService],
+    ]
 })
 
 export class UserModule {}

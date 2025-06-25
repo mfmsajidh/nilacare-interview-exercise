@@ -10,7 +10,6 @@ import { ProjectModule } from '../project';
   imports: [DatabaseModule, UserModule, ProjectModule],
   controllers: [TaskController],
   providers: [TaskService, TaskRepository],
-  exports: [TaskService],
 })
 
 export class TaskModule {}
