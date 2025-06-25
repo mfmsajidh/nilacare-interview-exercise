@@ -8,9 +8,17 @@ interface AuthState {
   logout: () => void;
 }
 
+const token = localStorage.getItem('token');
+if (token) {
+  client.setConfig({
+    baseUrl: import.meta.env.VITE_NILA_API_URL,
+    headers: { Authorization: `Bearer ${token}` }
+  });
+}
+
 export const useAuthStore = create<AuthState>((set) => ({
-  isAuthenticated: !!localStorage.getItem('token'),
-  token: localStorage.getItem('token'),
+  isAuthenticated: !!token,
+  token: token,
   setAuth: (token: string) => {
     localStorage.setItem('token', token);
     client.setConfig({ headers: { Authorization: `Bearer ${token}` } });
@@ -21,4 +29,4 @@ export const useAuthStore = create<AuthState>((set) => ({
     client.setConfig({ headers: {} });
     set({ isAuthenticated: false, token: null });
   },
-})); 
+}));
