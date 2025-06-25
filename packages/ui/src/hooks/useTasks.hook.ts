@@ -12,7 +12,6 @@ import { errorNotification, successNotification } from "../utils/notifications";
 export const useTasks = (filter: TaskFilter = {}) => {
   const queryClient = useQueryClient();
 
-  console.log("filter", filter);
   const { data: tasks = [], isLoading } = useQuery({
     ...searchTasksV1Options({
       query: { ...filter },
