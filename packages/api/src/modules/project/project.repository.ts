@@ -1,6 +1,6 @@
 import { Injectable, Inject } from '@nestjs/common';
 import { eq } from 'drizzle-orm';
-import {type DB, DRIZZLE} from 'db/db.ts';
+import {type DB, DRIZZLE} from 'db/db';
 import { projects } from 'db/schemas';
 import type { CreateProjectDto, UpdateProjectDto } from './dto';
 

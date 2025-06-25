@@ -20,7 +20,7 @@ export type Options<TData extends TDataShape = TDataShape, ThrowOnError extends 
 
 export const registerV1 = <ThrowOnError extends boolean = false>(options: Options<RegisterV1Data, ThrowOnError>) => {
     return (options.client ?? _heyApiClient).post<RegisterV1Responses, unknown, ThrowOnError>({
-        url: '/v1/auth/register',
+        url: '/v1/user/register',
         ...options,
         headers: {
             'Content-Type': 'application/json',
@@ -31,7 +31,7 @@ export const registerV1 = <ThrowOnError extends boolean = false>(options: Option
 
 export const loginV1 = <ThrowOnError extends boolean = false>(options: Options<LoginV1Data, ThrowOnError>) => {
     return (options.client ?? _heyApiClient).post<LoginV1Responses, unknown, ThrowOnError>({
-        url: '/v1/auth/login',
+        url: '/v1/user/login',
         ...options,
         headers: {
             'Content-Type': 'application/json',

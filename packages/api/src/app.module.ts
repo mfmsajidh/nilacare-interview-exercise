@@ -2,19 +2,16 @@ import {Module} from '@nestjs/common';
 import {LoggerModule} from 'nestjs-pino';
 import {DatabaseModule} from './db/db';
 import {loggerOptions} from './config';
-import {ProjectModule} from './modules/project/project.module';
-import {AuthModule} from './modules/auth/auth.module';
-import {TaskModule} from './modules/task/task.module';
+import {ProjectModule, TaskModule, UserModule} from './modules';
 
 @Module({
 	imports: [
 		DatabaseModule,
 		LoggerModule.forRoot(loggerOptions),
-		AuthModule,
+		UserModule,
 		ProjectModule,
 		TaskModule,
-	],
-	exports: [],
+	]
 })
-export class AppModule {
-}
+
+export class AppModule {}

@@ -142,7 +142,7 @@ export type RegisterV1Data = {
     body: RegisterBody;
     path?: never;
     query?: never;
-    url: '/v1/auth/register';
+    url: '/v1/user/register';
 };
 
 export type RegisterV1Responses = {
@@ -155,7 +155,7 @@ export type LoginV1Data = {
     body: LoginBody;
     path?: never;
     query?: never;
-    url: '/v1/auth/login';
+    url: '/v1/user/login';
 };
 
 export type LoginV1Responses = {

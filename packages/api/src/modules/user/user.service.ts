@@ -1,14 +1,26 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { UserRepository } from './user.repository';
 import * as bcrypt from 'bcrypt';
-import { JwtService } from './jwt.service';
+import {createSigner} from "fast-jwt";
 
 @Injectable()
-export class AuthService {
+export class UserService {
+  private readonly secret: string;
+  private readonly expiresIn: string;
+  private readonly signer: ReturnType<typeof createSigner>;
+
   constructor(
     private readonly userRepository: UserRepository,
-    private readonly jwtService: JwtService,
-  ) {}
+  ) {
+    this.secret = process.env.JWT_SECRET || 'super-secret';
+    this.expiresIn = '7d';
+    this.signer = createSigner({ key: async () => this.secret });
+  }
+
+
+  private async sign(payload: Record<string, any>): Promise<string> {
+    return this.signer({ ...payload, exp: Math.floor(Date.now() / 1000) + 7 * 24 * 60 * 60 });
+  }
 
   async register(email: string, password: string) {
     const existingUser = await this.userRepository.findByEmail(email);
@@ -22,7 +34,7 @@ export class AuthService {
       password: hashedPassword,
     });
 
-    const token = await this.jwtService.sign({ userId: user.id });
+    const token = await this.sign({ userId: user.id });
     return { user, token };
   }
 
@@ -37,7 +49,7 @@ export class AuthService {
       throw new UnauthorizedException('Invalid credentials');
     }
 
-    const token = await this.jwtService.sign({ userId: user.id });
+    const token = await this.sign({ userId: user.id });
     return { user, token };
   }
 
