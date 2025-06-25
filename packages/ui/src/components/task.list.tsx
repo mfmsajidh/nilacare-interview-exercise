@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import {
   Grid,
   Title,
@@ -22,40 +22,33 @@ interface TaskListProps {
 export function TaskList({ projectId }: TaskListProps) {
   const [opened, { open, close }] = useDisclosure(false);
   const [selectedTask, setSelectedTask] = useState<Task | null>(null);
-  const { tasks, loading, createTask, updateTask, deleteTask, setFilter } =
-    useTaskStore();
+  const [filter, setFilter] = useState<{ status?: TaskStatus; priority?: TaskPriority }>({});
+  const { tasks, loading, createTask, updateTask, deleteTask } = useTaskStore({
+    ...filter,
+    projectId,
+  });
 
-  useEffect(() => {
-    setFilter({ projectId });
-  }, [projectId, setFilter]);
-
-  const handleStatusChange = async (id: number, status: TaskStatus) => {
-    await updateTask(id, { status });
-  };
+  const handleStatusChange = (id: number, status: TaskStatus) => updateTask(id, {status});
 
   const handleEdit = (task: Task) => {
     setSelectedTask(task);
     open();
   };
 
-  const handleDelete = async (id: number) => {
-    await deleteTask(id);
-  };
+  const handleDelete = (id: number) => deleteTask(id);
 
-  const handleSubmit = async (values: CreateTaskDto) => {
-    if (selectedTask) {
-      await updateTask(selectedTask.id, values);
-    } else {
-      await createTask(values);
+  const handleSubmit = (values: CreateTaskDto) => {
+    if (selectedTask) {updateTask(selectedTask.id, values);
+    } else {createTask(values);
     }
     close();
   };
 
   const handleFilterChange = (field: 'status' | 'priority', value: TaskStatus | TaskPriority | null) => {
-    setFilter({
-      projectId,
-      [field]: value,
-    });
+    setFilter(prev => ({
+      ...prev,
+      [field]: value || undefined,
+    }));
   };
 
   return (

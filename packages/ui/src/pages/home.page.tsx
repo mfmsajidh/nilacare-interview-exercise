@@ -2,187 +2,113 @@ import { useState, useEffect } from 'react';
 import { Container, Title, Card, Text, Button, Group, TextInput, Stack, PasswordInput } from '@mantine/core';
 import { useNavigate } from 'react-router';
 import { notifications } from '@mantine/notifications';
-
-interface Project {
-	id: number;
-	name: string;
-	description: string;
-}
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import { loginV1Mutation, registerV1Mutation, getAllProjectsV1Options, createProjectV1Mutation } from '@nila/client/src/@tanstack/react-query.gen';
+import { client } from '@nila/client/src/client.gen';
 
 export const HomePage = () => {
 	const navigate = useNavigate();
-	const [projects, setProjects] = useState<Project[]>([]);
+	const queryClient = useQueryClient();
 	const [newProject, setNewProject] = useState({ name: '', description: '' });
 	const [authForm, setAuthForm] = useState({ email: '', password: '' });
 	const [isAuthenticated, setIsAuthenticated] = useState(false);
-	const [isLoading, setIsLoading] = useState(false);
 
 	useEffect(() => {
 		const token = localStorage.getItem('token');
 		if (token) {
 			setIsAuthenticated(true);
-			fetchProjects();
+			client.setConfig({ headers: { Authorization: `Bearer ${token}` } });
 		}
 	}, []);
 
-	const handleRegister = async () => {
-		try {
-			setIsLoading(true);
-			const response = await fetch('http://localhost:3000/v1/user/register', {
-				method: 'POST',
-				headers: {
-					'Content-Type': 'application/json',
-				},
-				body: JSON.stringify(authForm),
-			});
+	const { data: projects = [], isLoading: isProjectsLoading } = useQuery({
+		...getAllProjectsV1Options(),
+		enabled: isAuthenticated,
+	});
 
-			const data = await response.json();
-			if (!response.ok) {
-				throw new Error(data.message || 'Registration failed');
-			}
-
+	const { mutate: register, isPending: isRegistering } = useMutation({
+		...registerV1Mutation({
+			baseUrl: import.meta.env.VITE_NILA_API_URL
+		}),
+		onSuccess: (data) => {
 			localStorage.setItem('token', data.token);
+			client.setConfig({ headers: { Authorization: `Bearer ${data.token}` } });
 			setIsAuthenticated(true);
 			setAuthForm({ email: '', password: '' });
-
 			notifications.show({
 				title: 'Success',
 				message: 'Registration successful',
 				color: 'green',
 			});
-
-			fetchProjects();
-		} catch (error) {
+		},
+		onError: (error) => {
 			notifications.show({
 				title: 'Error',
 				message: error instanceof Error ? error.message : 'Registration failed',
 				color: 'red',
 			});
-		} finally {
-			setIsLoading(false);
-		}
-	};
+		},
+	});
 
-	const handleLogin = async () => {
-		try {
-			setIsLoading(true);
-			const response = await fetch('http://localhost:3000/v1/user/login', {
-				method: 'POST',
-				headers: {
-					'Content-Type': 'application/json',
-				},
-				body: JSON.stringify(authForm),
-			});
-
-			const data = await response.json();
-			if (!response.ok) {
-				throw new Error(data.message || 'Login failed');
-			}
-
+	const { mutate: login, isPending: isLoggingIn } = useMutation({
+		...loginV1Mutation(),
+		onSuccess: (data) => {
 			localStorage.setItem('token', data.token);
+			client.setConfig({ headers: { Authorization: `Bearer ${data.token}` } });
 			setIsAuthenticated(true);
 			setAuthForm({ email: '', password: '' });
-
 			notifications.show({
 				title: 'Success',
 				message: 'Login successful',
 				color: 'green',
 			});
-
-			fetchProjects();
-		} catch (error) {
+		},
+		onError: (error) => {
 			notifications.show({
 				title: 'Error',
 				message: error instanceof Error ? error.message : 'Login failed',
 				color: 'red',
 			});
-		} finally {
-			setIsLoading(false);
-		}
-	};
+		},
+	});
 
-	const fetchProjects = async () => {
-		try {
-			setIsLoading(true);
-			const token = localStorage.getItem('token');
-			if (!token) {
-				setIsAuthenticated(false);
-				return;
-			}
-
-			const response = await fetch('http://localhost:3000/v1/projects', {
-				headers: {
-					'Authorization': `Bearer ${token}`,
-				},
-			});
-
-			const data = await response.json();
-			if (!response.ok) {
-				if (response.status === 401) {
-					setIsAuthenticated(false);
-					localStorage.removeItem('token');
-					return;
-				}
-				throw new Error(data.message || 'Failed to fetch projects');
-			}
-
-			setProjects(Array.isArray(data) ? data : []);
-		} catch (error) {
-			notifications.show({
-				title: 'Error',
-				message: error instanceof Error ? error.message : 'Failed to fetch projects',
-				color: 'red',
-			});
-		} finally {
-			setIsLoading(false);
-		}
-	};
-
-	const createProject = async () => {
-		try {
-			setIsLoading(true);
-			const token = localStorage.getItem('token');
-			if (!token) {
-				setIsAuthenticated(false);
-				return;
-			}
-
-			const response = await fetch('http://localhost:3000/v1/projects', {
-				method: 'POST',
-				headers: {
-					'Content-Type': 'application/json',
-					'Authorization': `Bearer ${token}`,
-				},
-				body: JSON.stringify(newProject),
-			});
-
-			const data = await response.json();
-			if (!response.ok) {
-				if (response.status === 401) {
-					setIsAuthenticated(false);
-					localStorage.removeItem('token');
-					return;
-				}
-				throw new Error(data.message || 'Failed to create project');
-			}
-
+	const { mutate: createProject, isPending: isCreatingProject } = useMutation({
+		...createProjectV1Mutation(),
+		onSuccess: () => {
 			setNewProject({ name: '', description: '' });
-			fetchProjects();
-
+			queryClient.invalidateQueries({ queryKey: ['getAllProjectsV1'] });
 			notifications.show({
 				title: 'Success',
 				message: 'Project created successfully',
 				color: 'green',
 			});
-		} catch (error) {
+		},
+		onError: (error) => {
 			notifications.show({
 				title: 'Error',
 				message: error instanceof Error ? error.message : 'Failed to create project',
 				color: 'red',
 			});
-		} finally {
-			setIsLoading(false);
-		}
+		},
+	});
+
+	const handleRegister = () => {
+		register({ body: authForm });
+	};
+
+	const handleLogin = () => {
+		login({ body: authForm });
+	};
+
+	const handleCreateProject = () => {
+		createProject({ body: newProject });
+	};
+
+	const handleLogout = () => {
+		localStorage.removeItem('token');
+		client.setConfig({ headers: {} });
+		setIsAuthenticated(false);
+		queryClient.clear();
 	};
 
 	if (!isAuthenticated) {
@@ -198,28 +124,28 @@ export const HomePage = () => {
 								placeholder="Enter your email"
 								value={authForm.email}
 								onChange={(e) => setAuthForm({ ...authForm, email: e.target.value })}
-								disabled={isLoading}
+								disabled={isRegistering || isLoggingIn}
 							/>
 							<PasswordInput
 								label="Password"
 								placeholder="Enter your password"
 								value={authForm.password}
 								onChange={(e) => setAuthForm({ ...authForm, password: e.target.value })}
-								disabled={isLoading}
+								disabled={isRegistering || isLoggingIn}
 							/>
 							<Group>
 								<Button
 									onClick={handleLogin}
-									loading={isLoading}
-									disabled={!authForm.email || !authForm.password || isLoading}
+									loading={isLoggingIn}
+									disabled={!authForm.email || !authForm.password || isRegistering || isLoggingIn}
 								>
 									Login
 								</Button>
 								<Button
 									onClick={handleRegister}
 									variant="light"
-									loading={isLoading}
-									disabled={!authForm.email || !authForm.password || isLoading}
+									loading={isRegistering}
+									disabled={!authForm.email || !authForm.password || isRegistering || isLoggingIn}
 								>
 									Register
 								</Button>
@@ -238,12 +164,8 @@ export const HomePage = () => {
 					<Title order={2}>Projects</Title>
 					<Button
 						variant="light"
-						onClick={() => {
-							localStorage.removeItem('token');
-							setIsAuthenticated(false);
-							setProjects([]);
-						}}
-						disabled={isLoading}
+						onClick={handleLogout}
+						disabled={isProjectsLoading || isCreatingProject}
 					>
 						Logout
 					</Button>
@@ -257,19 +179,19 @@ export const HomePage = () => {
 							placeholder="Enter project name"
 							value={newProject.name}
 							onChange={(e) => setNewProject({ ...newProject, name: e.target.value })}
-							disabled={isLoading}
+							disabled={isCreatingProject}
 						/>
 						<TextInput
 							label="Description"
 							placeholder="Enter project description"
 							value={newProject.description}
 							onChange={(e) => setNewProject({ ...newProject, description: e.target.value })}
-							disabled={isLoading}
+							disabled={isCreatingProject}
 						/>
 						<Button
-							onClick={createProject}
-							loading={isLoading}
-							disabled={!newProject.name || isLoading}
+							onClick={handleCreateProject}
+							loading={isCreatingProject}
+							disabled={!newProject.name || isCreatingProject}
 						>
 							Create Project
 						</Button>
@@ -280,14 +202,14 @@ export const HomePage = () => {
 					{projects.map((project) => (
 						<Card key={project.id} withBorder shadow="sm" p="md">
 							<Group justify="space-between">
-		<div>
+								<div>
 									<Text fw={500} size="lg">{project.name}</Text>
 									<Text c="dimmed" size="sm">{project.description}</Text>
-		</div>
+								</div>
 								<Button
 									variant="light"
 									onClick={() => navigate(`/projects/${project.id}`)}
-									disabled={isLoading}
+									disabled={isProjectsLoading || isCreatingProject}
 								>
 									View Tasks
 								</Button>
