@@ -1,9 +1,9 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { getAllTasksV1Options, createTaskV1Mutation, updateTaskV1Mutation, deleteTaskV1Mutation } from '@nila/client/src/@tanstack/react-query.gen';
 import type { CreateTaskDto, UpdateTaskDto, TaskFilter } from '../../types/types';
-import {errorNotification, successNotification} from "../utils/notifications.tsx";
+import { errorNotification, successNotification } from "../utils/notifications";
 
-export const useTaskStore = (filter: TaskFilter = {}) => {
+export const useTasks = (filter: TaskFilter = {}) => {
   const queryClient = useQueryClient();
 
   const { data: tasks = [], isLoading } = useQuery(
@@ -67,4 +67,4 @@ export const useTaskStore = (filter: TaskFilter = {}) => {
     updateTask: (id: number, task: UpdateTaskDto) => updateTaskMutation({ body: task, path: { id } }),
     deleteTask: (id: number) => deleteTaskMutation({ path: { id } }),
   };
-};
+}; 

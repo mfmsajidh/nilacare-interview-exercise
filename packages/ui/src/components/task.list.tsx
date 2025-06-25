@@ -12,7 +12,7 @@ import {
 import { useDisclosure } from '@mantine/hooks';
 import { TaskCard } from './task.card';
 import { TaskForm } from './task.form';
-import { useTaskStore } from '../store';
+import { useTasks } from '../hooks';
 import type { Task, TaskStatus, TaskPriority, CreateTaskDto } from '../../types/types';
 
 interface TaskListProps {
@@ -23,7 +23,7 @@ export function TaskList({ projectId }: TaskListProps) {
   const [opened, { open, close }] = useDisclosure(false);
   const [selectedTask, setSelectedTask] = useState<Task | null>(null);
   const [filter, setFilter] = useState<{ status?: TaskStatus; priority?: TaskPriority }>({});
-  const { tasks, loading, createTask, updateTask, deleteTask } = useTaskStore({
+  const { tasks, loading, createTask, updateTask, deleteTask } = useTasks({
     ...filter,
     projectId,
   });
@@ -38,8 +38,10 @@ export function TaskList({ projectId }: TaskListProps) {
   const handleDelete = (id: number) => deleteTask(id);
 
   const handleSubmit = (values: CreateTaskDto) => {
-    if (selectedTask) {updateTask(selectedTask.id, values);
-    } else {createTask(values);
+    if (selectedTask) {
+      updateTask(selectedTask.id, values);
+    } else {
+      createTask(values);
     }
     close();
   };
