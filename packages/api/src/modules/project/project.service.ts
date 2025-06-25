@@ -1,7 +1,7 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { ProjectRepository } from './project.repository';
 import type { Project } from 'db/schemas';
-import type { CreateProjectDto, UpdateProjectDto } from './dto/project.dto';
+import type { CreateProjectDto, UpdateProjectDto } from './dto';
 
 @Injectable()
 export class ProjectService {
