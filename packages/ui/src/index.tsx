@@ -6,10 +6,9 @@ import '@mantine/core/styles.css';
 import '@mantine/dates/styles.css';
 import '@mantine/notifications/styles.css';
 import {createTheme, MantineProvider} from '@mantine/core';
-import {HomePage} from './pages/home.page';
 import {QueryClient, QueryClientProvider} from '@tanstack/react-query';
 import {Notifications} from '@mantine/notifications';
-import {ProjectController} from "./pages";
+import {ProjectController, HomeController} from "./pages";
 
 const myColor = ['#edf3ff', '#dae2f4', '#b3c2e6', '#8aa0d8', '#6783cc', '#5171c6', '#4568c4', '#3658ad', '#2e4e9c', '#21438a'] as const;
 
@@ -40,7 +39,7 @@ const routesConfig: RouteConfig[] = [
 		children: [
 			{
 				path: '',
-				element: <HomePage />,
+				element: <HomeController />,
 			},
 			{
 				path: '/projects/:id',
