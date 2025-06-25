@@ -2,7 +2,7 @@ import { Body, Post } from '@nestjs/common';
 import { AuthService } from '../services/auth.service';
 import {type Static, Type} from '@sinclair/typebox';
 import { Validate } from 'nestjs-typebox';
-import {NoAuthController} from "utils/controller.decorator";
+import {NoAuthController} from "../common";
 
 const RequestSchema = Type.Object({
   email: Type.String({

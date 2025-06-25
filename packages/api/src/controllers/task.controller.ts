@@ -10,7 +10,7 @@ import {
 } from '../dtos/task.dto';
 import {type Static, Type} from '@sinclair/typebox';
 import {Validate} from 'nestjs-typebox';
-import {AuthenticatedController} from "utils/controller.decorator";
+import {AuthenticatedController} from "../common";
 
 const StatusEnum = Type.Union([
     Type.Literal('todo'),

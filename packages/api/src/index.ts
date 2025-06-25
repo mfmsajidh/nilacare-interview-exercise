@@ -5,7 +5,7 @@ import {AppModule} from './app.module';
 import helmet from '@fastify/helmet';
 import multipart from '@fastify/multipart';
 import compression from '@fastify/compress';
-import {OPENAPI_SPEC} from './utils/openapi-builder';
+import {OPENAPI_SPEC} from './openapi/openapi-builder';
 import {apiReference} from '@scalar/nestjs-api-reference';
 import {configureNestJsTypebox} from 'nestjs-typebox';
 import {migrate} from 'drizzle-orm/node-postgres/migrator';

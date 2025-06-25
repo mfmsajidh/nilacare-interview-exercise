@@ -4,7 +4,7 @@ import {AuthService} from '../services/auth.service';
 import {DatabaseModule} from '../db/db';
 import {UserRepository} from '../repositories/user.repository';
 import {JwtService} from '../services/jwt.service';
-import {AuthGuard} from '../utils/auth.guard';
+import {AuthGuard} from '../common';
 
 @Module({
     imports: [DatabaseModule],
