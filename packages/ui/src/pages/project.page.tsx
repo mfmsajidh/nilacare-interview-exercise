@@ -2,6 +2,7 @@ import { useParams, useNavigate } from 'react-router';
 import { Container, Title, Paper, Text, Stack, Group, Button, LoadingOverlay } from '@mantine/core';
 import { useProject } from '../hooks';
 import { TaskList } from '../components/task.list';
+import { useEffect } from 'react';
 
 export function ProjectPage() {
   const { id } = useParams<{ id: string }>();
@@ -9,9 +10,14 @@ export function ProjectPage() {
   const projectId = parseInt(id || '0', 10);
   const { project, isLoading } = useProject(projectId);
 
+  useEffect(() => {
+    if (project === undefined && !isLoading) {
+      localStorage.removeItem('token');
+      navigate('/');
+    }
+  }, [project, isLoading, navigate]);
+
   if (project === undefined) {
-    localStorage.removeItem('token');
-    navigate('/');
     return null;
   }
 
