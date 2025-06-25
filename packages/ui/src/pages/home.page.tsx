@@ -1,67 +1,26 @@
 import { useState } from 'react';
 import { Container, Title, Card, Text, Button, Group, TextInput, Stack, PasswordInput } from '@mantine/core';
 import { useNavigate } from 'react-router';
-import { notifications } from '@mantine/notifications';
-import { useMutation } from '@tanstack/react-query';
-import { loginV1Mutation, registerV1Mutation } from '@nila/client/src/@tanstack/react-query.gen';
 import { useAuthStore } from '../store/auth.store';
 import { useProjects } from '../hooks/useProjects';
+import { useAuth } from '../hooks/useAuth';
 
 export const HomePage = () => {
 	const navigate = useNavigate();
 	const [newProject, setNewProject] = useState({ name: '', description: '' });
 	const [authForm, setAuthForm] = useState({ email: '', password: '' });
-	const { isAuthenticated, setAuth, logout } = useAuthStore();
+	const { isAuthenticated, logout } = useAuthStore();
 	const { projects, loading: isProjectsLoading, createProject, isCreating } = useProjects();
-
-	const { mutate: register, isPending: isRegistering } = useMutation({
-		...registerV1Mutation({
-			baseUrl: import.meta.env.VITE_NILA_API_URL
-		}),
-		onSuccess: (data) => {
-			setAuth(data.token);
-			setAuthForm({ email: '', password: '' });
-			notifications.show({
-				title: 'Success',
-				message: 'Registration successful',
-				color: 'green',
-			});
-		},
-		onError: (error) => {
-			notifications.show({
-				title: 'Error',
-				message: error instanceof Error ? error.message : 'Registration failed',
-				color: 'red',
-			});
-		},
-	});
-
-	const { mutate: login, isPending: isLoggingIn } = useMutation({
-		...loginV1Mutation(),
-		onSuccess: (data) => {
-			setAuth(data.token);
-			setAuthForm({ email: '', password: '' });
-			notifications.show({
-				title: 'Success',
-				message: 'Login successful',
-				color: 'green',
-			});
-		},
-		onError: (error) => {
-			notifications.show({
-				title: 'Error',
-				message: error instanceof Error ? error.message : 'Login failed',
-				color: 'red',
-			});
-		},
-	});
+	const { login, register, isLoggingIn, isRegistering } = useAuth();
 
 	const handleRegister = () => {
-		register({ body: authForm });
+		register(authForm);
+		setAuthForm({ email: '', password: '' });
 	};
 
 	const handleLogin = () => {
-		login({ body: authForm });
+		login(authForm);
+		setAuthForm({ email: '', password: '' });
 	};
 
 	const handleCreateProject = () => {
