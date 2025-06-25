@@ -6,39 +6,17 @@ import {
     UpdateTaskSchema,
     type CreateTaskDto,
     type TaskFilterDto,
-    type UpdateTaskDto
-} from './dto/task.dto.ts';
-import {type Static, Type} from '@sinclair/typebox';
+    type UpdateTaskDto,
+    type ResponseDto,
+    ResponseSchema
+} from './dto';
+import {Type} from '@sinclair/typebox';
 import {Validate} from 'nestjs-typebox';
 import {AuthenticatedController} from "common/decorators";
 
-const StatusEnum = Type.Union([
-    Type.Literal('todo'),
-    Type.Literal('in_progress'),
-    Type.Literal('done'),
-]);
-
-const PriorityEnum = Type.Union([
-    Type.Literal('low'),
-    Type.Literal('medium'),
-    Type.Literal('high'),
-]);
-
-const ResponseSchema = Type.Object({
-    id: Type.Number(),
-    title: Type.String(),
-    description: Type.Union([Type.String(), Type.Null()]),
-    status: StatusEnum,
-    priority: PriorityEnum,
-    projectId: Type.Number()
-})
-
-type ResponseDto = Static<typeof ResponseSchema>;
-
 @AuthenticatedController('/tasks')
 export class TaskController {
-    constructor(private readonly taskService: TaskService) {
-    }
+    constructor(private readonly taskService: TaskService) {}
 
     @Post()
     @Validate({

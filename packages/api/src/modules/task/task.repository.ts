@@ -1,8 +1,8 @@
 import { Injectable, Inject } from '@nestjs/common';
-import { and, eq, sql } from 'drizzle-orm';
+import { and, eq } from 'drizzle-orm';
 import {type DB, DRIZZLE} from 'db/db.ts';
 import { tasks } from 'db/schemas';
-import type { CreateTaskDto, TaskFilterDto, UpdateTaskDto } from './dto/task.dto';
+import type { CreateTaskDto, TaskFilterDto, UpdateTaskDto } from './dto';
 
 @Injectable()
 export class TaskRepository {

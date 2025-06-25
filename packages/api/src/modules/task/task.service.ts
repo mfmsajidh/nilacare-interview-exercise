@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { TaskRepository } from './task.repository';
-import type { CreateTaskDto, TaskFilterDto, UpdateTaskDto } from './dto/task.dto';
+import type { CreateTaskDto, TaskFilterDto, UpdateTaskDto } from './dto';
 import { ProjectService } from '../project/project.service';
 
 @Injectable()
@@ -44,7 +44,6 @@ export class TaskService {
   }
 
   async getTasksByProjectId(projectId: number) {
-    // Verify project exists
     await this.projectService.getProjectById(projectId);
     return this.taskRepository.findByProjectId(projectId);
   }
