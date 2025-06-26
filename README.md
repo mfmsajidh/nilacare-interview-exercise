@@ -29,6 +29,7 @@ A full-stack project management application with task tracking capabilities, bui
 - Mantine UI components
 - Zustand for state management
 - React Router for navigation
+- React-Query for fulfilling requests
 
 ## Prerequisites
 
@@ -62,6 +63,7 @@ bun run setup:db
 ```bash
 # Copy the example env file
 cp packages/api/.env.example packages/api/.env
+cp packages/ui/.env.example packages/ui/.env
 
 # Update the values in .env if needed
 # Default values should work for local development
@@ -159,7 +161,7 @@ The application will be available at:
 
 4. **JWT Authentication**
    - Stateless authentication
-   - Easy to scale horizontally
+   - Ability to scale horizontally
    - Built-in support in Fastify
 
 ### Frontend
@@ -187,42 +189,29 @@ The application will be available at:
 With more time, I would add:
 
 1. **Features**
-   - Drag-and-drop task reordering
-   - Task comments and attachments
-   - Task assignments to users
-   - Task due dates and reminders
-   - Real-time updates using WebSocket
-   - Task search functionality
-   - Task categories/labels
+   - Task related
+     - Drag-and-drop task reordering 
+     - Task search functionality (Have implemented backend API; currently is handled in frontend by manipulating states)
+     - Real-time updates using WebSocket
 
 2. **Technical Improvements**
-   - Unit and integration tests
-   - E2E tests with Cypress
-   - CI/CD pipeline
-   - Docker compose for production
-   - Rate limiting
-   - Request caching
-   - Error tracking (e.g., Sentry)
-   - Performance monitoring
-   - Better error handling
-   - Input sanitization
-   - API documentation with examples
+   - Extending Drizzle to support auditing via BaseAudit
+   - Unit/integration tests & E2E tests with Cypress
+   - CI/CD pipeline & Docker compose for production
+   - Rate limiting, Request caching & Performance monitoring
+   - Error tracking (e.g., Sentry) & better error handling
+   - Better Input sanitisation with improved API documentations including examples
 
 3. **UX Improvements**
-   - Loading skeletons
-   - Better error messages
-   - Keyboard shortcuts
-   - Bulk actions
-   - Task templates
-   - Export functionality
+   - Loading skeletons & better error messages
    - Mobile optimization
-   - Offline support
 
 ## Assumptions
 
 1. **Authentication**
    - Users are already registered
    - JWT tokens are handled securely
+     - Assuming user is already verified (verification of user is not handled currently)
    - No need for refresh tokens in MVP
 
 2. **Data**
@@ -233,10 +222,10 @@ With more time, I would add:
 3. **Performance**
    - Small to medium dataset
    - No need for pagination in MVP
-   - Simple caching strategy is sufficient
+   - A simple caching strategy is enough
 
 4. **Security**
-   - Basic JWT authentication is sufficient
+   - Basic JWT authentication is enough
    - No need for role-based access in MVP
    - Frontend runs in secure environment
 

@@ -13,6 +13,7 @@ import {db} from './db/db';
 import {Logger} from 'nestjs-pino';
 import {VersioningType} from '@nestjs/common';
 import {H} from "@highlight-run/nest";
+import { AllExceptionsFilter } from './common/filters/all-exceptions.filter';
 
 const env = {
 	projectID: 'jdk53pvd',
@@ -52,7 +53,8 @@ export const app = await NestFactory.create<NestFastifyApplication>(AppModule, n
 	rawBody: true,
 });
 
-app.useLogger(app.get(Logger));
+const logger = app.get(Logger);
+app.useGlobalFilters(new AllExceptionsFilter(logger));
 
 // MUST be before swagger module init
 app.enableVersioning({
