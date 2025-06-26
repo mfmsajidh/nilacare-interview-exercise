@@ -62,6 +62,7 @@ bun run setup:db
 ```bash
 # Copy the example env file
 cp packages/api/.env.example packages/api/.env
+cp packages/ui/.env.example packages/ui/.env
 
 # Update the values in .env if needed
 # Default values should work for local development
