@@ -250,11 +250,11 @@ With more time, I would add:
 2. Reset the database:
    ```bash
    cd packages
-   docker-compose down -v
-   docker-compose up -d
+   docker compose down -v
+   docker compose up -d
    cd api
-   bun run drizzle-kit generate
-   bun run drizzle-kit push
+   bun run db:generate
+   bun run db:migrate
    ```
 
 ### Development Server Issues
@@ -275,15 +275,3 @@ The API documentation is available at `/api-docs` when running the backend serve
 - Request/response schemas
 - Authentication requirements
 - Example requests
-
-## Contributing
-
-1. Fork the repository
-2. Create a feature branch
-3. Commit your changes
-4. Push to the branch
-5. Create a Pull Request
-
-## License
-
-MIT
