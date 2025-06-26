@@ -1,7 +1,7 @@
 import {ActionIcon, AppShell, Group, Image} from '@mantine/core';
 import {IconLogout} from '@tabler/icons-react';
 import {Outlet, useNavigate} from 'react-router';
-import Logo from './assets/logo.png';
+import Logo from './assets/images/logo.png';
 import {HeaderComponent} from '@components';
 import {useAuthStore} from '@store';
 
