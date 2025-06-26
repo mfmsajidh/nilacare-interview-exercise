@@ -11,8 +11,8 @@ import {
 } from '@mantine/core';
 import type {TaskStatus, TaskPriority} from '../../../../../types/types';
 import {TaskListComponentProps} from "./task-list.type";
-import {TaskFormController} from "../task-form";
-import {TaskCardController} from "../task-card";
+import {TaskFormController} from "./components/task-form";
+import {TaskCardController} from "./components/task-card";
 
 export function TaskListComponent({
                                       tasks,

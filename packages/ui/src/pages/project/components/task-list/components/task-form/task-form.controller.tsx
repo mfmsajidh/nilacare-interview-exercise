@@ -1,5 +1,5 @@
 import { useForm } from '@mantine/form';
-import type { CreateTaskDto } from '../../../../../types/types';
+import type { CreateTaskDto } from '../../../../../../../types/types';
 import type { TaskFormProps } from './task-form.type';
 import { TaskFormComponent } from './task-form.component';
 
