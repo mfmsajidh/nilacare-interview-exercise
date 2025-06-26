@@ -6,8 +6,8 @@ import {
   updateTaskV1Mutation,
   deleteTaskV1Mutation
 } from '@nila/client/src/@tanstack/react-query.gen';
-import type { CreateTaskDto, UpdateTaskDto, TaskFilter } from '../../types/types';
-import { errorNotification, successNotification } from "../utils/notifications";
+import type { CreateTaskDto, UpdateTaskDto, TaskFilter } from '../../../types/types';
+import { errorNotification, successNotification } from "../../utils/notifications";
 
 export const useTasks = (filter: TaskFilter = {}) => {
   const queryClient = useQueryClient();

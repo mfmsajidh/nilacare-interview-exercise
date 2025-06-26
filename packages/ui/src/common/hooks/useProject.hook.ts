@@ -3,7 +3,7 @@ import { getProjectByIdV1Options } from '@nila/client/src/@tanstack/react-query.
 
 export const useProject = (projectId: number) => {
   const query = getProjectByIdV1Options({ path: { id: projectId } });
-  
+
   const { data: project, isLoading } = useQuery({
     ...query,
     enabled: !!projectId,
@@ -13,4 +13,4 @@ export const useProject = (projectId: number) => {
     project,
     isLoading,
   };
-}; 
+};

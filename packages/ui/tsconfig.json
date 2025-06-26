@@ -7,8 +7,8 @@
 		"skipLibCheck": true,
 
 		"paths": {
-			"@hooks": ["./src/hooks/index.ts"],
-			"@hooks/*": ["./src/hooks/*"],
+			"@hooks": ["./src/common/hooks/index.ts"],
+			"@hooks/*": ["./src/common/hooks/*"],
 			"@store": ["./src/store/index.ts"],
 			"@store/*": ["./src/store/*"],
 		},
