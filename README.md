@@ -32,7 +32,7 @@ A full-stack project management application with task tracking capabilities, bui
 
 ## Prerequisites
 
-- Bun 1.0+
+- Bun 1.2.16+
 - PostgreSQL 17+
 - Docker (optional, recommended for local development)
 
@@ -95,8 +95,10 @@ The application will be available at:
 ### Backend (packages/api)
 - `bun run api:start` - Start the backend
 - `bun run api:dev` - Start the backend in development mode
-- `bun run drizzle-kit generate` - Generate new migrations
-- `bun run drizzle-kit migrate` - Apply migrations
+- `bun run api:spec&client` - Generate OpenAPI spec with TS types
+- `bun run db:generate` - Generate new migrations
+- `bun run db:migrate` - Apply migrations
+- `bun run db:studio` - Opens local drizzle studio
 
 ### Frontend (packages/ui)
 - `bun run ui:dev` - Start the frontend in development mode
@@ -127,13 +129,13 @@ The application will be available at:
    cd packages/api
    
    # After modifying schema files
-   bun run drizzle-kit generate
-   bun run drizzle-kit migrate
+   bun run db:generate
+   bun run db:migrate
    ```
 
-4. **Start production server:**
+4. **Start development server:**
    ```bash
-   bun run api:start
+   bun run api:dev
    ```
 
 ## Architecture Decisions
@@ -141,8 +143,6 @@ The application will be available at:
 ### Backend
 
 1. **NestJS with Fastify**
-   - Chose NestJS for its robust module system and dependency injection
-   - Used Fastify instead of Express for better performance
    - Modular architecture makes it easy to add new features
 
 2. **Drizzle ORM**
