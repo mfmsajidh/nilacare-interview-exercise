@@ -1,6 +1,6 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { getAllProjectsV1Options, createProjectV1Mutation, getAllProjectsV1QueryKey } from '@nila/client/src/@tanstack/react-query.gen';
-import {errorNotification, successNotification} from "../../utils/notifications";
+import {errorNotification, successNotification} from "@utils";
 import { useAuthStore } from '@store';
 import {CreateProjectDto} from "@types";
 

@@ -2,12 +2,12 @@ import {ActionIcon, AppShell, Group, Image} from '@mantine/core';
 import {IconLogout} from '@tabler/icons-react';
 import {Outlet, useNavigate} from 'react-router';
 import Logo from './assets/logo.png';
-import {HeaderMenu} from './components/header.menu';
-import { useAuthStore } from '@store';
+import {HeaderComponent} from '@components';
+import {useAuthStore} from '@store';
 
 export function App() {
     const navigate = useNavigate();
-    const { logout } = useAuthStore();
+    const {logout} = useAuthStore();
 
     const handleLogout = () => {
         logout();
@@ -20,7 +20,7 @@ export function App() {
                 <Group justify={'space-between'} h={'100%'}>
                     <Image src={Logo} visibleFrom={'sm'} maw={100} onClick={() => navigate('/')}/>
                     <Group gap={'xs'}>
-                        <HeaderMenu/>
+                        <HeaderComponent/>
 
                         <ActionIcon size={'sm'} variant={'transparent'} onClick={handleLogout}>
                             <IconLogout/>

@@ -1,7 +1,7 @@
 import {Tabs, Text} from '@mantine/core';
 import {useLocation, useNavigate} from 'react-router';
 
-export const HeaderMenu = () => {
+export const HeaderComponent = () => {
     const navigate = useNavigate();
     const { pathname } = useLocation();
 

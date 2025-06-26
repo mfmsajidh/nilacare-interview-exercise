@@ -4,7 +4,7 @@ import {useTasks} from '@hooks';
 import { TaskListComponent } from './task-list.component';
 import type { TaskFilter } from './task-list.type';
 import {useParams} from "react-router";
-import {CreateTaskDto} from "@types";
+import {CreateTaskDto, Task} from "@types";
 
 export function TaskListController() {
     const { id } = useParams<{ id: string }>();
