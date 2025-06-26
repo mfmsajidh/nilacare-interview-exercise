@@ -21,13 +21,13 @@ export const useProjects = () => {
       });
       successNotification('Project created successfully')
     },
-    onError: (error) => {
-      if (error instanceof Error && error.message.includes('401')) {
+    onError: (error: Error) => {
+      if (error.message.includes('401')) {
         localStorage.removeItem('token');
         window.location.href = '/';
         return;
       }
-      errorNotification(error instanceof Error ? error.message : 'Failed to create project')
+      errorNotification(error.message ?? 'Failed to create project')
     },
   });
 
