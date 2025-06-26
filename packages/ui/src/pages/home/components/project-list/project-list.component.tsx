@@ -1,5 +1,5 @@
 import {Card, Text, Button, Group, Stack} from '@mantine/core';
-import {ProjectListComponentProps} from "./project-list.type.ts";
+import {ProjectListComponentProps} from "./project-list.type";
 
 export const ProjectListComponent = ({
                                          navigate,

@@ -1,7 +1,7 @@
 import { FC } from 'react';
 import { Container, Title, Paper, Text, Stack, Group, Button, LoadingOverlay } from '@mantine/core';
-import { TaskList } from '../../components/task.list';
 import type { ProjectPageProps } from './project.type';
+import {TaskListController} from "./components";
 
 export const ProjectPageView: FC<ProjectPageProps> = ({ project, isLoading, navigate, projectId }) => {
     return (
@@ -21,7 +21,7 @@ export const ProjectPageView: FC<ProjectPageProps> = ({ project, isLoading, navi
                 </Group>
 
                 <Paper p="md">
-                    <TaskList projectId={projectId} />
+                    <TaskListController projectId={projectId} />
                 </Paper>
             </Stack>
         </Container>

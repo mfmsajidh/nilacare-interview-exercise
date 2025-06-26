@@ -1,6 +1,6 @@
 import { Card, Badge, Button, Text, Group, ActionIcon, Menu } from '@mantine/core';
 import { IconDots, IconTrash, IconEdit } from '@tabler/icons-react';
-import type {Task} from '../../types/types';
+import type {Task} from '../../../../types/types';
 
 interface TaskCardProps {
   task: Task;

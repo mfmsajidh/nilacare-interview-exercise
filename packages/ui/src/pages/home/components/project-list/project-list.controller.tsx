@@ -1,4 +1,4 @@
-import {ProjectListComponent} from "./project-list.component.tsx";
+import {ProjectListComponent} from "./project-list.component";
 import {useNavigate} from "react-router";
 import {useProjects} from "@hooks";
 

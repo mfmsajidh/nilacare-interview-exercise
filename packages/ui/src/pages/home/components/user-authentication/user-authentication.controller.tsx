@@ -1,7 +1,7 @@
 import {useState} from 'react';
 import {useAuth} from '@hooks';
 import type {AuthForm} from './user-authentication.type';
-import {UserAuthenticationComponent} from "./user-authentication.component.tsx";
+import {UserAuthenticationComponent} from "./user-authentication.component";
 
 export const UserAuthenticationController = () => {
     const [authForm, setAuthForm] = useState<AuthForm>({email: '', password: ''});
