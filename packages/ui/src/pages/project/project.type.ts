@@ -5,5 +5,4 @@ export type ProjectPageProps = {
     project: GetProjectByIdResponse;
     isLoading: boolean;
     navigate: NavigateFunction;
-    projectId: number;
 };

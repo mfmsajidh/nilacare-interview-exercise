@@ -1,9 +1,5 @@
 import type { Task, TaskStatus, TaskPriority, CreateTaskDto } from '../../../../../types/types';
 
-export interface TaskListProps {
-    projectId: number;
-}
-
 export type TaskFilter = {
     status?: TaskStatus;
     priority?: TaskPriority;

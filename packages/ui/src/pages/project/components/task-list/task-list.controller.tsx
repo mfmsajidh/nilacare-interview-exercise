@@ -1,11 +1,15 @@
 import { useDisclosure } from '@mantine/hooks';
 import { useState } from 'react';
-import { useTasks } from '@hooks';
+import {useTasks} from '@hooks';
 import { TaskListComponent } from './task-list.component';
 import type { Task, CreateTaskDto } from '../../../../../types/types';
-import type { TaskFilter, TaskListProps } from './task-list.type';
+import type { TaskFilter } from './task-list.type';
+import {useParams} from "react-router";
 
-export function TaskListController({ projectId }: TaskListProps) {
+export function TaskListController() {
+    const { id } = useParams<{ id: string }>();
+    const projectId = parseInt(id || '0', 10);
+
     const [opened, { open, close }] = useDisclosure(false);
     const [selectedTask, setSelectedTask] = useState<Task | null>(null);
     const [filter, setFilter] = useState<TaskFilter>({});

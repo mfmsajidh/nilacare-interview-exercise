@@ -1,15 +1,15 @@
-import { FC } from 'react';
-import { Container, Title, Paper, Text, Stack, Group, Button, LoadingOverlay } from '@mantine/core';
-import type { ProjectPageProps } from './project.type';
+import {FC} from 'react';
+import {Container, Title, Paper, Text, Stack, Group, Button, LoadingOverlay} from '@mantine/core';
+import type {ProjectPageProps} from './project.type';
 import {TaskListController} from "./components";
 
-export const ProjectPageView: FC<ProjectPageProps> = ({ project, isLoading, navigate, projectId }) => {
+export const ProjectPageView: FC<ProjectPageProps> = ({project, isLoading, navigate}) => {
     return (
         <Container>
             <Stack gap="xl">
                 <Group justify="space-between" align="center">
                     <Paper p="md" pos="relative">
-                        <LoadingOverlay visible={isLoading} />
+                        <LoadingOverlay visible={isLoading}/>
                         <Stack gap="md">
                             <Title order={1}>{project?.name}</Title>
                             <Text c="dimmed">{project?.description || ''}</Text>
@@ -20,9 +20,7 @@ export const ProjectPageView: FC<ProjectPageProps> = ({ project, isLoading, navi
                     </Button>
                 </Group>
 
-                <Paper p="md">
-                    <TaskListController projectId={projectId} />
-                </Paper>
+                <TaskListController/>
             </Stack>
         </Container>
     );
