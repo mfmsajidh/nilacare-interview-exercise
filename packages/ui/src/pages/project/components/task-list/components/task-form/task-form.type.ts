@@ -1,5 +1,5 @@
-import type { Task, CreateTaskDto } from '../../../../../../../types/types';
 import type {UseFormReturnType} from "@mantine/form";
+import {CreateTaskDto, Task} from "@types";
 
 export interface TaskFormProps {
     opened: boolean;

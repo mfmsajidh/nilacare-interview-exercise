@@ -2,9 +2,9 @@ import { useDisclosure } from '@mantine/hooks';
 import { useState } from 'react';
 import {useTasks} from '@hooks';
 import { TaskListComponent } from './task-list.component';
-import type { Task, CreateTaskDto } from '../../../../../types/types';
 import type { TaskFilter } from './task-list.type';
 import {useParams} from "react-router";
+import {CreateTaskDto} from "@types";
 
 export function TaskListController() {
     const { id } = useParams<{ id: string }>();

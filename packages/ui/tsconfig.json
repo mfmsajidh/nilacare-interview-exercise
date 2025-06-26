@@ -11,6 +11,8 @@
 			"@hooks/*": ["./src/common/hooks/*"],
 			"@store": ["./src/common/store/index.ts"],
 			"@store/*": ["./src/common/store/*"],
+			"@types": ["./src/common/types/index.ts"],
+			"@types/*": ["./src/common/types/*"],
 		},
 		"moduleResolution": "bundler",
 		"allowImportingTsExtensions": true,

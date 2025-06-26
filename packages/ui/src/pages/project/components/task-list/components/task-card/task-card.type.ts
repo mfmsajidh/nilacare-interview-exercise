@@ -1,4 +1,4 @@
-import type { Task } from '../../../../../../../types/types';
+import {Task} from "@types";
 
 export interface TaskCardProps {
     task: Task;

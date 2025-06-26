@@ -1,4 +1,4 @@
-import type { Task, TaskStatus, TaskPriority, CreateTaskDto } from '../../../../../types/types';
+import {CreateTaskDto, Task, TaskPriority, TaskStatus} from "@types";
 
 export type TaskFilter = {
     status?: TaskStatus;
