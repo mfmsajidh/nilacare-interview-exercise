@@ -9,8 +9,8 @@
 		"paths": {
 			"@hooks": ["./src/common/hooks/index.ts"],
 			"@hooks/*": ["./src/common/hooks/*"],
-			"@store": ["./src/store/index.ts"],
-			"@store/*": ["./src/store/*"],
+			"@store": ["./src/common/store/index.ts"],
+			"@store/*": ["./src/common/store/*"],
 		},
 		"moduleResolution": "bundler",
 		"allowImportingTsExtensions": true,
