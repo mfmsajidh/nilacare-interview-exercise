@@ -14,6 +14,10 @@ if (token) {
     baseUrl: import.meta.env.VITE_NILA_API_URL,
     headers: { Authorization: `Bearer ${token}` }
   });
+} else {
+  client.setConfig({
+    baseUrl: import.meta.env.VITE_NILA_API_URL,
+  });
 }
 
 export const useAuthStore = create<AuthState>((set) => ({
