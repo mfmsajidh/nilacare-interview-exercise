@@ -8,10 +8,10 @@ import {
     Text,
     Title,
 } from '@mantine/core';
-import { TaskCard } from '../task.card';
 import type { TaskStatus, TaskPriority } from '../../../../../types/types';
 import {TaskListComponentProps} from "./task-list.type";
 import {TaskFormController} from "../task-form";
+import {TaskCardController} from "../task-card";
 
 export function TaskListComponent({
                                       tasks,
@@ -65,7 +65,7 @@ export function TaskListComponent({
                     <Grid>
                         {tasks.map((task) => (
                             <Grid.Col key={task.id} span={4}>
-                                <TaskCard
+                                <TaskCardController
                                     task={task}
                                     onStatusChange={onStatusChange}
                                     onEdit={onEdit}
