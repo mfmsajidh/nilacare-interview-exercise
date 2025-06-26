@@ -145,44 +145,107 @@ The application will be available at:
 ### Backend
 
 1. **NestJS with Fastify**
-   - Modular architecture makes it easy to add new features
+   - Modular architecture with clear separation of concerns
+   - Global exception filter for consistent error handling
+   - Already handled (KEPT IT AS IT IS)
+     - Custom decorators for authentication and controller versioning
+     - Pino logger integration for structured logging 
+     - Fastify for improved performance over Express
 
-2. **Drizzle ORM**
-   - Type-safe database operations
-   - Better performance compared to TypeORM
-   - Built-in migration system
-   - SQL-first approach for better control
+2. **Code Organization**
+   - Feature-based module structure (projects, tasks, users)
+   - Common module for shared functionality
+     - Already handled (KEPT IT AS IT IS)
+       - Decorators (@AuthenticatedController, @NoAuthController, @Public)
+       - Guards (AuthGuard for JWT validation)
+  - Filters (AllExceptionsFilter for global error handling)
+  - Clear separation between DTOs, controllers, services, and repositories
+  - Consistent file naming conventions (*.controller.ts, *.service.ts, etc.)
 
-3. **TypeBox for Validation**
-   - Runtime type validation
-   - Better performance than class-validator
-   - Shared types between frontend and backend
-   - OpenAPI schema generation
+3. **Database & ORM**
+   - Repository pattern for data access abstraction
+   - Already handled (KEPT IT AS IT IS)
+     - PostgreSQL with Drizzle ORM for type-safe operations
+     - Structured migration system with versioning
+     - Schemas defined with TypeBox for validation and type safety
 
-4. **JWT Authentication**
-   - Stateless authentication
-   - Ability to scale horizontally
-   - Built-in support in Fastify
+4. **API Design** (Already handled - KEPT IT AS IT IS)
+   - OpenAPI/Swagger documentation with examples
+   - Versioned API endpoints (v1 by default)
+   - Consistent response formats
+   - TypeBox validation for request/response schemas
+   - Shared types between frontend and backend via SDK generation
+
+5. **Authentication & Security**
+   - JWT-based authentication with fast-jwt
+   - Already handled (KEPT IT AS IT IS)
+     - Global auth guard with public route exceptions
+     - Helmet for security headers
+     - CORS enabled with proper configuration
+     - Request compression and multipart support
 
 ### Frontend
 
-1. **Mantine UI**
-   - Modern component library
-   - Built-in dark mode support
-   - Excellent TypeScript support
-   - Comprehensive component set
+1. **React Architecture**
+   - Feature-based organization (pages/features approach)
+   - Component composition pattern
+     - Separation of concerns between component, controller, and types
+     - Reusable components in common directory
+   - Custom hooks for business logic
+   - Type-safe API client generation from OpenAPI spec
 
-2. **Zustand**
-   - Lightweight state management
-   - Simple API compared to Redux
-   - Built-in TypeScript support
-   - Easy integration with React hooks
+2. **State Management**
+   - Zustand for global state
+   - React Query for server state management
+   - Proper caching and invalidation strategies
+   - Optimistic updates for better UX
 
-3. **Project Structure**
-   - Feature-based organization
-   - Shared types between frontend and backend
-   - Reusable components
-   - Clear separation of concerns
+3. **UI/UX Design** (Already handled - KEPT IT AS IT IS)
+   - Mantine UI for consistent component design
+   - Responsive layout with grid system
+   - Toast notifications for user feedback
+
+4. **Code Quality** (Already handled - KEPT IT AS IT IS)
+   - TypeScript for type safety
+   - Biome for linting and formatting
+   - Consistent file and folder structure
+   - Proper error boundary implementation
+
+## Assumptions
+
+1. **Authentication & Authorization**
+   - JWT-based authentication is sufficient for MVP
+   - Single user type (no role-based access control)
+   - Tokens are stored securely in client-side storage
+   - No refresh token mechanism needed for MVP
+   - Session management is handled client-side
+
+2. **Data Management**
+   - Projects and tasks have a one-to-many relationship
+   - Single ownership model (no sharing/collaboration features)
+   - In-memory caching is sufficient for current scale
+   - No soft delete required for MVP
+   - No audit trail needed for initial version
+
+3. **API Design**
+   - RESTful endpoints are sufficient (no GraphQL needed)
+   - Synchronous operations are acceptable (no need for queues)
+   - Rate limiting not required for MVP
+   - Basic error handling is sufficient
+   - English-only support for messages and content
+
+4. **Performance & Scalability**
+   - Application will handle moderate load
+   - No need for horizontal scaling in MVP
+   - Client-side filtering/sorting is acceptable
+   - No need for server-side pagination initially
+   - Basic caching strategy is sufficient
+
+5. **Development & Deployment**
+   - Development environment uses Docker for consistency
+   - Local development uses bun for package management
+   - Environment variables handle configuration
+   - Development-focused logging is acceptable
 
 ## Future Improvements
 
@@ -205,29 +268,6 @@ With more time, I would add:
 3. **UX Improvements**
    - Loading skeletons & better error messages
    - Mobile optimization
-
-## Assumptions
-
-1. **Authentication**
-   - Users are already registered
-   - JWT tokens are handled securely
-     - Assuming user is already verified (verification of user is not handled currently)
-   - No need for refresh tokens in MVP
-
-2. **Data**
-   - Projects and tasks belong to a single user
-   - No need for sharing/collaboration in MVP
-   - Simple data structure is sufficient
-
-3. **Performance**
-   - Small to medium dataset
-   - No need for pagination in MVP
-   - A simple caching strategy is enough
-
-4. **Security**
-   - Basic JWT authentication is enough
-   - No need for role-based access in MVP
-   - Frontend runs in secure environment
 
 ## Troubleshooting
 
