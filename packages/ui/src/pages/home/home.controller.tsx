@@ -4,18 +4,16 @@ import {CreateProjectController, ProjectListController, UserAuthenticationContro
 
 export const HomeController = () => {
     const {isAuthenticated} = useAuthStore();
-    return isAuthenticated ? (
-        <HomePage
-            title={"Projects"}
-            children={
-                <>
-                    <CreateProjectController/>
-                    <ProjectListController/>
-                </>
-            }
-        />
-    ) : <HomePage
+    return isAuthenticated ? <HomePage
+        title={"Projects"}
+        children={
+            <>
+                <CreateProjectController/>
+                <ProjectListController/>
+            </>
+        }
+    /> : <HomePage
         title={'Welcome to Nila Care'}
         children={<UserAuthenticationController/>}
-    />;
+    />
 };
